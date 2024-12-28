@@ -1,0 +1,113 @@
+[                   0] Starting Scenario
+[                   0][Task Manager][clkTask : toggleSeq] Started Task
+clk
+[                   0][Task Manager][dlyTask : delay] Started To Wait On rstTask
+[                   0][Task Manager][dlyTask0 : delay] Started Task
+[                   0][Task Manager][rstTask : toggleSeq] Started Task
+rst
+[                   0][Task Manager][rx1 : receiver] Started To Wait On txTask
+[                   0][Task Manager][rx2 : receiver] Started To Wait On txTask
+[                   0][Task Manager][task1 : helloHuman] Started To Wait On rstTask
+[                   0][Task Manager][task2 : helloHuman] Started To Wait On rstTask
+[                   0][Task Manager][task3 : helloHuman] Started To Wait On rstTask
+[                   0][Task Manager][txTask : broadcaster] Started To Wait On rstTask
+[                   6][Task Manager][dlyTask0 : delay] Finished
+[                   6][Task Manager][dlyTask0 : delay] dlyTask0 job done           1 /           9 jobs finished
+[                  10][Task Manager][rstTask : toggleSeq] Finished
+[                  10][Task Manager][rstTask : toggleSeq] rstTask job done           2 /           9 jobs finished
+[                  10][Task Manager][dlyTask : delay] Started Task
+[                  10][Task Manager][task1 : helloHuman] Started Task
+Selamat pagi
+[                  10][Task Manager][task2 : helloHuman] Started Task
+Bonjour
+[                  10][Task Manager][task3 : helloHuman] Started Task
+سلام
+[                  10][Task Manager][txTask : broadcaster] Started Task
+[                  10][Task Manager][task1 : helloHuman] task1 job done           3 /           9 jobs finished
+[                  10][Task Manager][task2 : helloHuman] task2 job done           4 /           9 jobs finished
+[                  10][Task Manager][task3 : helloHuman] task3 job done           5 /           9 jobs finished
+[                  10][Task Manager][txTask : broadcaster] txTask job done           6 /           9 jobs finished
+[                  10][Task Manager][rx1 : receiver] Started Task
+MSG ACK From ID: rx1 received the following message:
+Hello Rx how are ya?
+Have Recieved           1 messages in total
+[                  10][Task Manager][rx2 : receiver] Started Task
+MSG ACK From ID: rx2 received the following message:
+Hello Rx how are ya?
+Have Recieved           1 messages in total
+[                  10][Task Manager][rx1 : receiver] Started Task
+MSG ACK From ID: rx1 received the following message:
+Hello Rx how are ya?
+Have Recieved           2 messages in total
+[                  10][Task Manager][rx2 : receiver] Started Task
+MSG ACK From ID: rx2 received the following message:
+Hello Rx how are ya?
+Have Recieved           2 messages in total
+[                  10][Task Manager][rx1 : receiver] Started Task
+MSG ACK From ID: rx1 received the following message:
+Hello Rx how are ya?
+Have Recieved           3 messages in total
+[                  10][Task Manager][rx2 : receiver] Started Task
+MSG ACK From ID: rx2 received the following message:
+Hello Rx how are ya?
+Have Recieved           3 messages in total
+[                  10][Task Manager][rx1 : receiver] Started Task
+MSG ACK From ID: rx1 received the following message:
+Hello Rx how are ya?
+Have Recieved           4 messages in total
+[                  10][Task Manager][rx2 : receiver] Started Task
+MSG ACK From ID: rx2 received the following message:
+Hello Rx how are ya?
+Have Recieved           4 messages in total
+[                  10][Task Manager][rx1 : receiver] Started Task
+MSG ACK From ID: rx1 received the following message:
+Hello Rx how are ya?
+Have Recieved           5 messages in total
+[                  10][Task Manager][rx2 : receiver] Started Task
+MSG ACK From ID: rx2 received the following message:
+Hello Rx how are ya?
+Have Recieved           5 messages in total
+[                  10][Task Manager][rx1 : receiver] Started Task
+MSG ACK From ID: rx1 received the following message:
+Hello Rx how are ya?
+Have Recieved           6 messages in total
+[                  10][Task Manager][rx2 : receiver] Started Task
+MSG ACK From ID: rx2 received the following message:
+Hello Rx how are ya?
+Have Recieved           6 messages in total
+[                  10][Task Manager][rx1 : receiver] Started Task
+MSG ACK From ID: rx1 received the following message:
+Hello Rx how are ya?
+Have Recieved           7 messages in total
+[                  10][Task Manager][rx2 : receiver] Started Task
+MSG ACK From ID: rx2 received the following message:
+Hello Rx how are ya?
+Have Recieved           7 messages in total
+[                  10][Task Manager][rx1 : receiver] Started Task
+MSG ACK From ID: rx1 received the following message:
+Hello Rx how are ya?
+Have Recieved           8 messages in total
+[                  10][Task Manager][rx2 : receiver] Started Task
+MSG ACK From ID: rx2 received the following message:
+Hello Rx how are ya?
+Have Recieved           8 messages in total
+[                  10][Task Manager][rx1 : receiver] Started Task
+MSG ACK From ID: rx1 received the following message:
+Hello Rx how are ya?
+Have Recieved           9 messages in total
+[                  10][Task Manager][rx2 : receiver] Started Task
+MSG ACK From ID: rx2 received the following message:
+Hello Rx how are ya?
+Have Recieved           9 messages in total
+[                  10][Task Manager][rx1 : receiver] Started Task
+MSG ACK From ID: rx1 received the following message:
+Hello Rx how are ya?
+Have Recieved          10 messages in total
+[                  10][Task Manager][rx2 : receiver] Started Task
+MSG ACK From ID: rx2 received the following message:
+Hello Rx how are ya?
+Have Recieved          10 messages in total
+[                  10][Task Manager][rx1 : receiver] rx1 job done           7 /           9 jobs finished
+[                  10][Task Manager][rx2 : receiver] rx2 job done           8 /           9 jobs finished
+[                  16][Task Manager][dlyTask : delay] dlyTask job done           9 /           9 jobs finished
+- /home/john/Desktop/Code/VTB/vtb/src/scenarioGen.sv:34: Verilog $finish

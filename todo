@@ -1,0 +1,5 @@
+add name string to jobUtil class call in factory template, so messages can just use that to publish
+rework task -> job name convention
+switch to using the --binary so main.cpp isnt needed anymore
+add validation for yaml input
+add doc on how to use
