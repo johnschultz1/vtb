@@ -1,0 +1,1 @@
+$VTBHOME/examples/duts/simpleDut.sv

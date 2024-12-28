@@ -1,0 +1,59 @@
+syntax = "proto3";  // Using Proto3 syntax
+
+package proto_design_model;
+
+
+option go_package = "../vtb/design_model";
+
+
+message DesignModel {
+	string TopName = 1;
+    repeated Component Components = 2;
+}
+
+message Component  {
+	string Name = 1;
+	string Type = 2;
+	string Hierarchy = 3;
+	repeated Signal Signals = 4;
+	repeated Port Ports = 5;
+	repeated Interface Interfaces = 6;
+	repeated SubComponent SubComponents = 7;
+	map<string, ConnectionList> FanInConnMap = 8;
+    map<string, ConnectionList> FanOutConnMap = 9;
+}
+message Port  {
+	string Name       = 1;
+	string Type       = 2;
+	string Dir        = 3;
+	string Hierarchy  = 4;
+}
+
+message Interface  {
+	string Name  = 1;
+	repeated Port Ports  = 2;
+}
+
+message Signal  {
+	string Name       = 1 ;
+	string Type       = 2 ;
+	string Hierarchy  = 3 ;
+}
+
+message SubComponent  {
+	string Name       = 1;
+	string Type       = 2;
+	string Hierarchy  = 3;
+}
+
+message Connection  {
+	string Component = 1;
+	string VarName   = 2;
+	string VarType   = 3;
+	string VarKind   = 4;
+} 
+
+message ConnectionList {
+    repeated Connection Connections= 1;
+}
+

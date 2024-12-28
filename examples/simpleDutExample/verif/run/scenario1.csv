@@ -1,0 +1,11 @@
+TaskName,CallName,Config,DependencyName,DependencyType,MsgID,Finishes
+dlyTask0,delay,dly6,,,,true
+rstTask,toggleSeq,rst,,,,true
+clkTask,toggleSeq,clk,,,,false
+task1,helloHuman,,rstTask,onFinish,,true
+task2,helloHuman,,rstTask,onFinish,,true
+dlyTask,delay,dly6,rstTask,onFinish,,true
+task3,helloHuman,,rstTask,onFinish,,true
+txTask,broadcaster,tx,rstTask,onFinish,,true
+rx1,receiver,rx1,txTask,onMsgAvail,broadcast,true
+rx2,receiver,rx2,txTask,onMsgAvail,broadcast,true

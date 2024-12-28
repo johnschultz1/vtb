@@ -1,0 +1,74 @@
+scenario:
+  name: scenario1 
+  globalconfig:
+    -
+      name: globals
+  tasks:
+    -
+      name: dlyTask0
+      callName: delay
+      config: dly6
+    -
+      name: rstTask
+      callName: toggleSeq
+      config: rst
+    -
+      name: clkTask
+      callName: toggleSeq
+      config: clk
+      finishes: false
+    -
+      name: task1
+      callName: helloHuman
+      dependencies:
+      -
+        name: rstTask
+        type: onFinish
+    -
+      name: task2
+      callName: helloHuman
+      dependencies:
+      -
+        name: rstTask
+        type: onFinish
+    -
+      name: dlyTask
+      callName: delay
+      config: dly6
+      dependencies:
+      -
+        name: rstTask
+        type: onFinish
+    -
+      name: task3
+      callName: helloHuman
+      dependencies:
+      -
+        name: rstTask
+        type: onFinish
+    -
+      name: txTask
+      callName: broadcaster
+      config: tx
+      dependencies:
+      -
+        name: rstTask
+        type: onFinish
+    -
+      name: rx1
+      callName: receiver
+      config: rx1
+      dependencies:
+      -
+        name: txTask
+        type: onMsgAvail
+        msgID: broadcast
+    -
+      name: rx2
+      callName: receiver
+      config: rx2
+      dependencies:
+      -
+        name: txTask
+        type: onMsgAvail
+        msgID: broadcast

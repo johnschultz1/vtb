@@ -1,0 +1,71 @@
+{
+  "Components": [
+    {
+      "Name": "simpleDut",
+      "Type": "simpleDut",
+      "Hierarchy": "$root.simpleDut",
+      "Ports": [
+        {
+          "Name": "clk",
+          "Type": "logic",
+          "Dir": "In",
+          "Hierarchy": "$root.simpleDut.clk"
+        },
+        {
+          "Name": "rst",
+          "Type": "logic",
+          "Dir": "In",
+          "Hierarchy": "$root.simpleDut.rst"
+        },
+        {
+          "Name": "i_bitSignal1",
+          "Type": "logic",
+          "Dir": "In",
+          "Hierarchy": "$root.simpleDut.i_bitSignal1"
+        },
+        {
+          "Name": "i_bitSignal2",
+          "Type": "logic",
+          "Dir": "In",
+          "Hierarchy": "$root.simpleDut.i_bitSignal2"
+        },
+        {
+          "Name": "i_bit32Signal1",
+          "Type": "logic[31:0]",
+          "Dir": "In",
+          "Hierarchy": "$root.simpleDut.i_bit32Signal1"
+        },
+        {
+          "Name": "i_bit8Signal2",
+          "Type": "logic[7:0]",
+          "Dir": "In",
+          "Hierarchy": "$root.simpleDut.i_bit8Signal2"
+        },
+        {
+          "Name": "o_bitSignal1",
+          "Type": "logic",
+          "Dir": "Out",
+          "Hierarchy": "$root.simpleDut.o_bitSignal1"
+        },
+        {
+          "Name": "o_bitSignal2",
+          "Type": "logic",
+          "Dir": "Out",
+          "Hierarchy": "$root.simpleDut.o_bitSignal2"
+        },
+        {
+          "Name": "o_bit32Signal1",
+          "Type": "logic[31:0]",
+          "Dir": "Out",
+          "Hierarchy": "$root.simpleDut.o_bit32Signal1"
+        },
+        {
+          "Name": "o_bit8Signal2",
+          "Type": "logic[7:0]",
+          "Dir": "Out",
+          "Hierarchy": "$root.simpleDut.o_bit8Signal2"
+        }
+      ]
+    }
+  ]
+}

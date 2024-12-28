@@ -1,0 +1,94 @@
+---
+config:
+  name: rst
+  vars:
+    -
+      name: SIGINIT
+      type: ints
+      value: 0
+    -
+      name: SIG
+      type: strings
+      value: rst
+    -
+      name: TOGGLEINITDELAY
+      type: ints
+      value: 10
+---
+config:
+  name: clk
+  vars:
+    -
+      name: SIGINIT
+      type: ints
+      value: 0
+    -
+      name: SIG
+      type: strings
+      value: clk
+    -
+      name: TOGGLEFOREVER
+      type: bool
+      value: 1
+    -
+      name: TOGGLEINITDELAY
+      type: ints
+      value: 5
+    -
+      name: TOGGLEDELAY
+      type: ints
+      value: 5
+---
+config:
+  name: tx
+  vars:
+    -
+      name: name
+      type: strings
+      value: txTask
+    -
+      name: content
+      type: strings
+      value: Hello Rx how are ya?
+    -
+      name: ID
+      type: stringList
+      values: 
+      - "rx1"
+      - "rx2"
+    -
+      name: BROADCASTMSGNAME
+      type: strings
+      value: broadcast
+---
+config:
+  name: rx1
+  vars:
+    -
+      name: ID
+      type: strings
+      value: rx1
+    -
+      name: BROADCASTMSGNAME
+      type: strings
+      value: broadcast
+---
+config:
+  name: rx2
+  vars:
+    -
+      name: ID
+      type: strings
+      value: rx2
+    -
+      name: BROADCASTMSGNAME
+      type: strings
+      value: broadcast
+---
+config:
+  name: dly6
+  vars:
+    -
+      name: CYCLES
+      type: ints
+      value: 6
