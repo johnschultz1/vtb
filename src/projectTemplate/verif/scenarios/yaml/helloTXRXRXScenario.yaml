@@ -3,7 +3,7 @@ scenario:
   globalconfig:
     -
       name: globals
-  tasks:
+  jobs:
     -
       name: dlyTask0
       callName: delay

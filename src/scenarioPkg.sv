@@ -3,12 +3,12 @@ package scenarioPkg;
     import utilityPkg::*;
 
     scenarioInfo_t scenario;
-    task_q_t msgQ;
-    tasksStatus_t taskStatus;
-    // string entry: TASKNAME_MSGTYPENAME
-    taskEvent msgEvents[string];
-    // string entry: TASKNAME_[STARTED | FINISHED | ERROR]
-    taskEvent taskEvents[string]; 
+    job_q_t msgQ;
+    jobsStatus_t jobStatus;
+    // string entry: jobNAME_MSGTYPENAME
+    jobEvent msgEvents[string];
+    // string entry: jobNAME_[STARTED | FINISHED | ERROR]
+    jobEvent jobEvents[string]; 
 
     int numThreads;
     int threadDoneCount;
@@ -17,10 +17,10 @@ package scenarioPkg;
 
     virtual dutInterface vif;
 
-    task automatic incrThreadDone(string taskName, string taskCallName);
+    task automatic incrThreadDone(string jobName, string jobCallName);
         threadIncr.get(1);
         threadDoneCount = threadDoneCount + 1;
-        printMsg($sformatf("%s job done %d / %d jobs finished", taskName, threadDoneCount, numThreads), taskName, taskCallName);
+        printMsg($sformatf("%s job done %d / %d jobs finished", jobName, threadDoneCount, numThreads), jobName, jobCallName);
         if (threadDoneCount == numThreads) begin
             done = 1'b1;
         end
@@ -33,54 +33,53 @@ package scenarioPkg;
         threadIncr.put(1);
     endtask
 
-    task automatic waitOnTaskDone(input string taskName);
-        string eventName = {taskName,"_","FINISHED"};
-        taskEvents[eventName].waitOnEvent();    
+    task automatic waitOnjobDone(input string jobName);
+        string eventName = {jobName,"_","FINISHED"};
+        jobEvents[eventName].waitOnEvent();    
     endtask
 
-    function  bit taskFinished(input string taskName);
-        return taskStatus[taskName].done;
+    function  bit jobFinished(input string jobName);
+        return jobStatus[jobName].done;
     endfunction
 
-    task automatic triggerTaskDone(input string taskName, input string taskCallName);
-        string eventName = {taskName,"_","FINISHED"};
-        taskStatus[taskName].taskEndTime = $realtime();
-        taskStatus[taskName].taskStatus = "DONE";
-        taskStatus[taskName].done = 1'b1;
-        taskEvents[eventName].setEvent();
-        incrThreadDone(taskName,taskCallName);
+    task automatic triggerjobDone(input string jobName, input string jobCallName);
+        string eventName = {jobName,"_","FINISHED"};
+        jobStatus[jobName].jobEndTime = $realtime();
+        jobStatus[jobName].jobStatus = "DONE";
+        jobStatus[jobName].done = 1'b1;
+        jobEvents[eventName].setEvent();
+        incrThreadDone(jobName,jobCallName);
     endtask
 
-    task automatic initTaskStatus(input string taskName);
-        string eventName = {taskName,"_","FINISHED"};
-        taskStatus[taskName].done = 1'b0;
-        taskEvents[eventName] = new();    
-        taskStatus[taskName].taskStartTime = $realtime();
-        taskStatus[taskName].taskStatus = "INIT";
+    task automatic initjobStatus(input string jobName);
+        string eventName = {jobName,"_","FINISHED"};
+        jobStatus[jobName].done = 1'b0;
+        jobEvents[eventName] = new();    
+        jobStatus[jobName].jobStartTime = $realtime();
+        jobStatus[jobName].jobStatus = "INIT";
     endtask
 
-
-    task automatic initTaskMsg(input string taskName, input string msgType, input string dependencyName);
-        string eventName = {taskName,"_", msgType,"_",dependencyName};
+    task automatic initjobMsg(input string jobName, input string msgType, input string dependencyName);
+        string eventName = {jobName,"_", msgType,"_",dependencyName};
         msgEvents[eventName] = new();
-        msgQ[taskName][msgType][dependencyName] = {};    
+        msgQ[jobName][msgType][dependencyName] = {};    
     endtask
 
     // TODO: could also conditionally store msg based on logging level
-    task automatic triggerNewMessageProducedEvent(input string taskName, input string msgType, input string dependencyName);
-         string eventName = {taskName,"_", msgType,"_",dependencyName};
+    task automatic triggerNewMessageProducedEvent(input string jobName, input string msgType, input string dependencyName);
+         string eventName = {jobName,"_", msgType,"_",dependencyName};
          msgEvents[eventName].setEvent();
-         taskStatus[taskName].producedMsgTime[msgType].push_back($realtime);
+         jobStatus[jobName].producedMsgTime[msgType].push_back($realtime);
     endtask
 
-    task automatic waitOnMsgAvail(input string taskName, input string msgType, input string dependencyName);
-        string eventName = {taskName,"_", msgType,"_",dependencyName};
-        string taskDoneEvent = {taskName,"_","FINISHED"};
-        @(msgEvents[eventName].e, taskEvents[taskDoneEvent].e.triggered );   
+    task automatic waitOnMsgAvail(input string jobName, input string msgType, input string dependencyName);
+        string eventName = {jobName,"_", msgType,"_",dependencyName};
+        string jobDoneEvent = {jobName,"_","FINISHED"};
+        @(msgEvents[eventName].e, jobEvents[jobDoneEvent].e.triggered );   
     endtask
 
-    task automatic triggerNewMessageConsumedEvent(input string taskName, input string msgType);
-       taskStatus[taskName].consumedMsgTime[msgType].push_back($realtime);
+    task automatic triggerNewMessageConsumedEvent(input string jobName, input string msgType);
+       jobStatus[jobName].consumedMsgTime[msgType].push_back($realtime);
     endtask
 
 endpackage

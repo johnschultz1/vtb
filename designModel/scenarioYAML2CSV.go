@@ -29,14 +29,14 @@ type topConfig struct {
 type Scenario struct {
 	Name      string   `yaml:"name"`
 	GlobalCfg []Global `yaml:"globalCfg"`
-	Tasks     []Task   `yaml:"tasks"`
+	Jobs      []Job    `yaml:"jobs"`
 }
 
 type Global struct {
 	Name string `yaml:"name"`
 }
 
-type Task struct {
+type Job struct {
 	Name         string       `yaml:"name"`
 	CallName     string       `yaml:"callName"`
 	Config       string       `yaml:"config"`
@@ -122,7 +122,7 @@ func LoadYamlFiles(filePatterns []string, projectDir string, outputDir string, t
 					return fmt.Errorf("failed to write scenario CSV for file %s: %w", filename, err)
 				}
 
-				// create task factory if its the top scenario
+				// create Job factory if its the top scenario
 				if scenario.Name == top {
 					generateFactory(projectDir, scenario)
 				}
@@ -147,27 +147,27 @@ func LoadYamlFiles(filePatterns []string, projectDir string, outputDir string, t
 
 func generateFactory(projectDir string, scenario Scenario) {
 	// Parse the interface templates with the helper functions
-	tmpl, err := template.New("taskFactory.tpl").ParseFiles(os.ExpandEnv("$VTBHOME/src/goTemplates/taskFactory.tpl"))
+	tmpl, err := template.New("jobFactory.tpl").ParseFiles(os.ExpandEnv("$VTBHOME/src/goTemplates/jobFactory.tpl"))
 	util.ErrCheck(err, "failed to parse template file")
 
 	// create factory
-	outputFile, err := os.Create(os.ExpandEnv(projectDir) + "/design/taskFactory.sv")
+	outputFile, err := os.Create(os.ExpandEnv(projectDir) + "/design/jobFactory.sv")
 	util.ErrCheck(err, "failed to create output file")
-	// remove tasks with duplicate call names, no need for them
-	scenario.Tasks = RemoveDuplicates(scenario.Tasks)
+	// remove Jobs with duplicate call names, no need for them
+	scenario.Jobs = RemoveDuplicates(scenario.Jobs)
 	err = tmpl.Execute(outputFile, scenario)
 	util.ErrCheck(err, "failed to create output file")
 	defer outputFile.Close()
 }
 
-func RemoveDuplicates(tasks []Task) []Task {
+func RemoveDuplicates(Jobs []Job) []Job {
 	seen := make(map[string]bool)
-	var result []Task
+	var result []Job
 
-	for _, task := range tasks {
-		if !seen[task.CallName] {
-			result = append(result, task)
-			seen[task.CallName] = true
+	for _, Job := range Jobs {
+		if !seen[Job.CallName] {
+			result = append(result, Job)
+			seen[Job.CallName] = true
 		}
 	}
 	return result
@@ -234,25 +234,25 @@ func writeScenarioToCSV(scenario *Scenario, filename string) error {
 	defer writer.Flush()
 
 	// Write header
-	header := []string{"TaskName", "CallName", "Config", "DependencyName", "DependencyType", "MsgID", "Finishes"}
+	header := []string{"JobName", "CallName", "Config", "DependencyName", "DependencyType", "MsgID", "Finishes"}
 	if err := writer.Write(header); err != nil {
 		return fmt.Errorf("failed to write header: %w", err)
 	}
 
-	// Write task data
-	for _, task := range scenario.Tasks {
+	// Write Job data
+	for _, Job := range scenario.Jobs {
 		finishes := "true"
-		if task.Finishes != "" {
-			finishes = task.Finishes
+		if Job.Finishes != "" {
+			finishes = Job.Finishes
 		}
-		if len(task.Dependencies) == 0 {
-			row := []string{task.Name, task.CallName, task.Config, "", "", "", finishes}
+		if len(Job.Dependencies) == 0 {
+			row := []string{Job.Name, Job.CallName, Job.Config, "", "", "", finishes}
 			if err := writer.Write(row); err != nil {
-				return fmt.Errorf("failed to write task row: %w", err)
+				return fmt.Errorf("failed to write Job row: %w", err)
 			}
 		} else {
-			for _, dep := range task.Dependencies {
-				row := []string{task.Name, task.CallName, task.Config, dep.Name, dep.Type, dep.MsgID, finishes}
+			for _, dep := range Job.Dependencies {
+				row := []string{Job.Name, Job.CallName, Job.Config, dep.Name, dep.Type, dep.MsgID, finishes}
 				if err := writer.Write(row); err != nil {
 					return fmt.Errorf("failed to write dependency row: %w", err)
 				}

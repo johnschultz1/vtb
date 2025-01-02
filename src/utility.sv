@@ -22,7 +22,7 @@
   
       // Read each line
       while (!$feof(fileHandle)) begin
-          automatic string taskName;
+          automatic string jobName;
           automatic string callName;
           automatic string dependencyName;
           automatic string dependencyType;
@@ -34,7 +34,7 @@
           if (line != "") begin
             // Parse the CSV
             fields              = splitString(line, ",");
-            taskName            = fields[0];
+            jobName            = fields[0];
             callName            = fields[1];
             configName          = fields[2];
             dependencyName      = fields[3];
@@ -42,11 +42,12 @@
             msgType             = fields[5];
             if (fields[6] == "true") finishes = 1'b1; 
             else finishes = 1'b0;
-            scenario[taskName].taskConfig                                                            = configs[configName];
-            scenario[taskName].taskCallName                                                          = callName;
-            scenario[taskName].finishes                                                              = finishes;
-            if (dependencyName != "") scenario[taskName].dependencies[dependencyName].dependencyType = getDependencyType(dependencyType);
-            if (dependencyName != "") scenario[taskName].dependencies[dependencyName].messageType    = msgType;
+            $display(jobName);
+            scenario[jobName].jobConfig                                                             = configs[configName];
+            scenario[jobName].jobCallName                                                           = callName;
+            scenario[jobName].finishes                                                              = finishes;
+            if (dependencyName != "") scenario[jobName].dependencies[dependencyName].dependencyType = getDependencyType(dependencyType);
+            if (dependencyName != "") scenario[jobName].dependencies[dependencyName].messageType    = msgType;
           end
       end
   
@@ -146,6 +147,6 @@
     return -1; // Return -1 if not found
   endfunction
 
-  function void printMsg(string message, string taskName, string taskCallName);
-    $display($sformatf("[%t][Task Manager][%s : %s] %s", $realtime(), taskName, taskCallName, message));
+  function void printMsg(string message, string jobName, string jobCallName);
+    $display($sformatf("[%t][job Manager][%s : %s] %s", $realtime(), jobName, jobCallName, message));
   endfunction

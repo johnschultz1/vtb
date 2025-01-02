@@ -1,30 +1,30 @@
-    task scenarioGen(scenarioInfo_t tasks);
+    task scenarioGen(scenarioInfo_t jobs);
         $display($sformatf("[%t] Starting Scenario", $realtime()));
         scenarioPkg::threadIncr = new(1);
         scenarioPkg::done = 1'b0;
 
-        // init tasks
-        foreach(tasks[x]) begin
-            automatic taskInfo_t currentTask;
-            automatic string taskName;
-            scenarioPkg::initTaskStatus(x);
+        // init jobs
+        foreach(jobs[x]) begin
+            automatic jobInfo_t currentJob;
+            automatic string jobName;
+            scenarioPkg::initjobStatus(x);
             // init the message event arrays
-            currentTask = tasks[x];
-            taskName = x;
-            foreach (currentTask.dependencies[y]) begin
-                if (currentTask.dependencies[y].dependencyType == onMsgAvail) scenarioPkg::initTaskMsg(y, currentTask.dependencies[y].messageType, taskName);
+            currentJob = jobs[x];
+            jobName = x;
+            foreach (currentJob.dependencies[y]) begin
+                if (currentJob.dependencies[y].dependencyType == onMsgAvail) scenarioPkg::initjobMsg(y, currentJob.dependencies[y].messageType, jobName);
             end
-            if (currentTask.finishes) scenarioPkg::incrNumThreads();
+            if (currentJob.finishes) scenarioPkg::incrNumThreads();
         end
 
-        //run tasks
-        foreach(tasks[x]) begin
-            automatic msg_t taskConfig = tasks[x].taskConfig;
-            automatic dependencies_t dependencies = tasks[x].dependencies;
-            automatic string taskName = x;
-            automatic string taskCallName = tasks[x].taskCallName;
+        //run jobs
+        foreach(jobs[x]) begin
+            automatic msg_t jobConfig = jobs[x].jobConfig;
+            automatic dependencies_t dependencies = jobs[x].dependencies;
+            automatic string jobName = x;
+            automatic string jobCallName = jobs[x].jobCallName;
             fork
-                taskManager(.taskName(taskName), .taskConfig(taskConfig), .dependencies(dependencies), .taskCallName(taskCallName)); 
+                jobManager(.jobName(jobName), .jobConfig(jobConfig), .dependencies(dependencies), .jobCallName(jobCallName)); 
             join_none
         end
 

@@ -1,4 +1,4 @@
-TaskName,CallName,Config,DependencyName,DependencyType,MsgID,Finishes
+JobName,CallName,Config,DependencyName,DependencyType,MsgID,Finishes
 dlyTask0,delay,dly6,,,,true
 rstTask,toggleSeq,rst,,,,true
 clkTask,toggleSeq,clk,,,,false

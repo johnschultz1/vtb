@@ -41,60 +41,6 @@ class delay;
 
 endclass;
 
-//class rstSeq;
-
-   // `startJob
-   //     inf.setDut(cfg.strings["RSTSIG"],0);
-   //     #(cfg.ints["ONCYCLES"]);
-   //     inf.setDut(cfg.strings["RSTSIG"],1);
-   // `endJob
-
-//endclass;
-
-class automatic toggleSeq;
-    string id;
-    //virtual dutInterface vif;
-
-
-   // function new(string id, dutIf);
-       // this.id =id;
-      //  vif = dutIf;
-  //  endfunction
-
-      `startJob
-     //`taskStart(toggleSeq)
-
-        automatic  msg_t configuration = cfg; 
-        bit sigInit;
-        // init 
-        $display(configuration.strings["SIG"]);
-        sigInit = configuration.ints["SIGINIT"];
-        vif.setDut(configuration.strings["SIG"],sigInit);
-        #(configuration.ints["TOGGLEINITDELAY"]);
-    
-        // toggle forever
-        if(configuration.bool["TOGGLEFOREVER"]) begin
-            while(1) begin
-                vif.setDut(configuration.strings["SIG"],~sigInit);
-                sigInit = ~sigInit;
-                #(configuration.ints["TOGGLEDELAY"]);
-            end
-        // toggle x # cycles
-        end else if (configuration.ints.exists("TOGGLECYCLES")) begin
-            repeat(configuration.ints["TOGGLECYCLES"]) begin
-                vif.setDut(configuration.strings["SIG"],~sigInit);
-                sigInit = ~sigInit;
-                #(configuration.ints["TOGGLEDELAY"]);
-            end
-        // toggle once
-        end else begin
-            vif.setDut(configuration.strings["SIG"],~sigInit);
-            sigInit = ~sigInit;
-        end
-      `endJob
-
-endclass;
-
 class broadcaster;
 
     `startJob
@@ -105,7 +51,7 @@ class broadcaster;
             msg.stringList["ID"]   = cfg.stringList["ID"];
             msg.msgType = cfg.strings["BROADCASTMSGNAME"];
             //#1;
-            publishMsg(.taskName(cfg.strings["name"]), .msg(msg));
+            publishMsg(.jobName(cfg.strings["name"]), .msg(msg));
             //#1;
         end
 

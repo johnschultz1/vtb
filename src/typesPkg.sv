@@ -28,7 +28,7 @@ package typesPkg;
     typedef msg_t msg_q_t[$];                       // Queue of messages
     typedef msg_q_t dependency_q_t[string];         // Dependency queues
     typedef dependency_q_t msg_type_q_t[string];    // Message type queues
-    typedef msg_type_q_t task_q_t[string];          // Task queues
+    typedef msg_type_q_t job_q_t[string];          // job queues
 
     // *********************************************************************
     //   _______        _      ____        _ _     _   _____        __      
@@ -50,12 +50,12 @@ package typesPkg;
     
     typedef struct {
         dependencies_t dependencies;
-        msg_t taskConfig;
-        string taskCallName;
+        msg_t jobConfig;
+        string jobCallName;
         bit finishes;
-    } taskInfo_t;
+    } jobInfo_t;
 
-    typedef taskInfo_t scenarioInfo_t[string];
+    typedef jobInfo_t scenarioInfo_t[string];
     
     // ********************************************************************
     //   _______        _      ______                 _____        __      
@@ -69,17 +69,17 @@ package typesPkg;
     typedef time msgTypeTimes_t[$];
 
     typedef struct {
-        time taskStartTime; // when task started
-        time taskEndTime; // when task ended
-        string taskStatus; // if the task is done or running or error
+        time jobStartTime; // when job started
+        time jobEndTime; // when job ended
+        string jobStatus; // if the job is done or running or error
         bit done;
         msgTypeTimes_t consumedMsgTime[string];
         msgTypeTimes_t producedMsgTime[string];
-    } taskStatus_t;
+    } jobStatus_t;
 
-    typedef taskStatus_t tasksStatus_t[string];
+    typedef jobStatus_t jobsStatus_t[string];
 
-    class taskEvent;
+    class jobEvent;
         event e;
         task setEvent();
             -> e;
