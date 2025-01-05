@@ -2,193 +2,193 @@
   "design": {
     "name": "$root",
     "kind": "Root",
-    "addr": 6177372451840,
+    "addr": 4035760829440,
     "members": [
       {
         "name": "",
         "kind": "CompilationUnit",
-        "addr": 6177372898528
+        "addr": 4035761276128
       },
       {
         "name": "simpleDut",
         "kind": "Instance",
-        "addr": 6177372899536,
+        "addr": 4035761277136,
         "body": {
           "name": "simpleDut",
           "kind": "InstanceBody",
-          "addr": 6177372898824,
+          "addr": 4035761276424,
           "members": [
             {
               "name": "clk",
               "kind": "Port",
-              "addr": 6177372899664,
+              "addr": 4035761277264,
               "type": "logic",
               "direction": "In",
-              "internalSymbol": "6177372899792 clk"
+              "internalSymbol": "4035761277392 clk"
             },
             {
               "name": "clk",
               "kind": "Net",
-              "addr": 6177372899792,
+              "addr": 4035761277392,
               "type": "logic",
               "netType": {
                 "name": "wire",
                 "kind": "NetType",
-                "addr": 6177372452960,
+                "addr": 4035760830560,
                 "type": "logic"
               }
             },
             {
               "name": "rst",
               "kind": "Port",
-              "addr": 6177372900160,
+              "addr": 4035761277760,
               "type": "logic",
               "direction": "In",
-              "internalSymbol": "6177372900288 rst"
+              "internalSymbol": "4035761277888 rst"
             },
             {
               "name": "rst",
               "kind": "Net",
-              "addr": 6177372900288,
+              "addr": 4035761277888,
               "type": "logic",
               "netType": {
                 "name": "wire",
                 "kind": "NetType",
-                "addr": 6177372452960,
+                "addr": 4035760830560,
                 "type": "logic"
               }
             },
             {
               "name": "i_bitSignal1",
               "kind": "Port",
-              "addr": 6177372900656,
+              "addr": 4035761278256,
               "type": "logic",
               "direction": "In",
-              "internalSymbol": "6177372900784 i_bitSignal1"
+              "internalSymbol": "4035761278384 i_bitSignal1"
             },
             {
               "name": "i_bitSignal1",
               "kind": "Variable",
-              "addr": 6177372900784,
+              "addr": 4035761278384,
               "type": "logic",
               "lifetime": "Static"
             },
             {
               "name": "i_bitSignal2",
               "kind": "Port",
-              "addr": 6177372901128,
+              "addr": 4035761278728,
               "type": "logic",
               "direction": "In",
-              "internalSymbol": "6177372901392 i_bitSignal2"
+              "internalSymbol": "4035761278992 i_bitSignal2"
             },
             {
               "name": "i_bitSignal2",
               "kind": "Variable",
-              "addr": 6177372901392,
+              "addr": 4035761278992,
               "type": "logic",
               "lifetime": "Static"
             },
             {
               "name": "i_bit32Signal1",
               "kind": "Port",
-              "addr": 6177372901736,
+              "addr": 4035761279336,
               "type": "logic[31:0]",
               "direction": "In",
-              "internalSymbol": "6177372901864 i_bit32Signal1"
+              "internalSymbol": "4035761279464 i_bit32Signal1"
             },
             {
               "name": "i_bit32Signal1",
               "kind": "Variable",
-              "addr": 6177372901864,
+              "addr": 4035761279464,
               "type": "logic[31:0]",
               "lifetime": "Static"
             },
             {
               "name": "i_bit8Signal2",
               "kind": "Port",
-              "addr": 6177372902208,
+              "addr": 4035761279808,
               "type": "logic[7:0]",
               "direction": "In",
-              "internalSymbol": "6177372902336 i_bit8Signal2"
+              "internalSymbol": "4035761279936 i_bit8Signal2"
             },
             {
               "name": "i_bit8Signal2",
               "kind": "Variable",
-              "addr": 6177372902336,
+              "addr": 4035761279936,
               "type": "logic[7:0]",
               "lifetime": "Static"
             },
             {
               "name": "o_bitSignal1",
               "kind": "Port",
-              "addr": 6177372902680,
+              "addr": 4035761280280,
               "type": "logic",
               "direction": "Out",
-              "internalSymbol": "6177372902808 o_bitSignal1"
+              "internalSymbol": "4035761280408 o_bitSignal1"
             },
             {
               "name": "o_bitSignal1",
               "kind": "Variable",
-              "addr": 6177372902808,
+              "addr": 4035761280408,
               "type": "logic",
               "lifetime": "Static"
             },
             {
               "name": "o_bitSignal2",
               "kind": "Port",
-              "addr": 6177372903152,
+              "addr": 4035761280752,
               "type": "logic",
               "direction": "Out",
-              "internalSymbol": "6177372903280 o_bitSignal2"
+              "internalSymbol": "4035761280880 o_bitSignal2"
             },
             {
               "name": "o_bitSignal2",
               "kind": "Variable",
-              "addr": 6177372903280,
+              "addr": 4035761280880,
               "type": "logic",
               "lifetime": "Static"
             },
             {
               "name": "o_bit32Signal1",
               "kind": "Port",
-              "addr": 6177372903624,
+              "addr": 4035761281224,
               "type": "logic[31:0]",
               "direction": "Out",
-              "internalSymbol": "6177372903752 o_bit32Signal1"
+              "internalSymbol": "4035761281352 o_bit32Signal1"
             },
             {
               "name": "o_bit32Signal1",
               "kind": "Variable",
-              "addr": 6177372903752,
+              "addr": 4035761281352,
               "type": "logic[31:0]",
               "lifetime": "Static"
             },
             {
               "name": "o_bit8Signal2",
               "kind": "Port",
-              "addr": 6177372904096,
+              "addr": 4035761281696,
               "type": "logic[7:0]",
               "direction": "Out",
-              "internalSymbol": "6177372904224 o_bit8Signal2"
+              "internalSymbol": "4035761281824 o_bit8Signal2"
             },
             {
               "name": "o_bit8Signal2",
               "kind": "Variable",
-              "addr": 6177372904224,
+              "addr": 4035761281824,
               "type": "logic[7:0]",
               "lifetime": "Static"
             },
             {
               "name": "counter",
               "kind": "Variable",
-              "addr": 6177372899080,
+              "addr": 4035761276680,
               "type": "bit[7:0]",
               "lifetime": "Static"
             },
             {
               "name": "",
               "kind": "ProceduralBlock",
-              "addr": 6177372899424,
+              "addr": 4035761277024,
               "procedureKind": "Always",
               "body": {
                 "kind": "Timed",
@@ -197,7 +197,7 @@
                   "expr": {
                     "kind": "NamedValue",
                     "type": "logic",
-                    "symbol": "6177372899792 clk"
+                    "symbol": "4035761277392 clk"
                   },
                   "edge": "PosEdge"
                 },
@@ -218,7 +218,7 @@
                             "operand": {
                               "kind": "NamedValue",
                               "type": "logic",
-                              "symbol": "6177372900288 rst"
+                              "symbol": "4035761277888 rst"
                             }
                           },
                           "right": {
@@ -250,7 +250,7 @@
                               "left": {
                                 "kind": "NamedValue",
                                 "type": "bit[7:0]",
-                                "symbol": "6177372899080 counter"
+                                "symbol": "4035761276680 counter"
                               },
                               "right": {
                                 "kind": "Conversion",
@@ -274,7 +274,7 @@
                               "left": {
                                 "kind": "NamedValue",
                                 "type": "logic",
-                                "symbol": "6177372902808 o_bitSignal1"
+                                "symbol": "4035761280408 o_bitSignal1"
                               },
                               "right": {
                                 "kind": "Conversion",
@@ -303,7 +303,7 @@
                               "left": {
                                 "kind": "NamedValue",
                                 "type": "logic",
-                                "symbol": "6177372902808 o_bitSignal1"
+                                "symbol": "4035761280408 o_bitSignal1"
                               },
                               "right": {
                                 "kind": "Conversion",
@@ -341,7 +341,7 @@
                               "left": {
                                 "kind": "NamedValue",
                                 "type": "logic",
-                                "symbol": "6177372902808 o_bitSignal1"
+                                "symbol": "4035761280408 o_bitSignal1"
                               },
                               "right": {
                                 "kind": "UnaryOp",
@@ -350,7 +350,7 @@
                                 "operand": {
                                   "kind": "NamedValue",
                                   "type": "logic",
-                                  "symbol": "6177372902808 o_bitSignal1"
+                                  "symbol": "4035761280408 o_bitSignal1"
                                 }
                               },
                               "isNonBlocking": false
@@ -364,7 +364,7 @@
                               "left": {
                                 "kind": "NamedValue",
                                 "type": "logic",
-                                "symbol": "6177372903280 o_bitSignal2"
+                                "symbol": "4035761280880 o_bitSignal2"
                               },
                               "right": {
                                 "kind": "UnaryOp",
@@ -373,7 +373,7 @@
                                 "operand": {
                                   "kind": "NamedValue",
                                   "type": "logic",
-                                  "symbol": "6177372903280 o_bitSignal2"
+                                  "symbol": "4035761280880 o_bitSignal2"
                                 }
                               },
                               "isNonBlocking": false
@@ -387,7 +387,7 @@
                               "left": {
                                 "kind": "NamedValue",
                                 "type": "logic[31:0]",
-                                "symbol": "6177372903752 o_bit32Signal1"
+                                "symbol": "4035761281352 o_bit32Signal1"
                               },
                               "right": {
                                 "kind": "Conversion",
@@ -409,7 +409,7 @@
                               "left": {
                                 "kind": "NamedValue",
                                 "type": "logic[7:0]",
-                                "symbol": "6177372904224 o_bit8Signal2"
+                                "symbol": "4035761281824 o_bit8Signal2"
                               },
                               "right": {
                                 "kind": "Conversion",
@@ -417,7 +417,7 @@
                                 "operand": {
                                   "kind": "NamedValue",
                                   "type": "bit[7:0]",
-                                  "symbol": "6177372899080 counter"
+                                  "symbol": "4035761276680 counter"
                                 }
                               },
                               "isNonBlocking": false
@@ -431,7 +431,7 @@
                               "left": {
                                 "kind": "NamedValue",
                                 "type": "bit[7:0]",
-                                "symbol": "6177372899080 counter"
+                                "symbol": "4035761276680 counter"
                               },
                               "right": {
                                 "kind": "Conversion",
@@ -446,7 +446,7 @@
                                     "operand": {
                                       "kind": "NamedValue",
                                       "type": "bit[7:0]",
-                                      "symbol": "6177372899080 counter"
+                                      "symbol": "4035761276680 counter"
                                     }
                                   },
                                   "right": {
@@ -473,7 +473,7 @@
               }
             }
           ],
-          "definition": "6177372127488 simpleDut"
+          "definition": "4035760505088 simpleDut"
         },
         "connections": [
         ]
@@ -484,8 +484,8 @@
     {
       "name": "simpleDut",
       "kind": "Definition",
-      "addr": 6177372127488,
-      "defaultNetType": "6177372452960 wire",
+      "addr": 4035760505088,
+      "defaultNetType": "4035760830560 wire",
       "definitionKind": "Module",
       "defaultLifetime": "Static",
       "unconnectedDrive": "None"

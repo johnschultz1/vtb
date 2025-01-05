@@ -374,5 +374,5 @@
 [                 610][job Manager][dly2 : delay] dly2 job done           3 /           3 jobs finished
 - /home/john/Desktop/Code/VTB/vtb/src/scenarioGen.sv:34: Verilog $finish
 - S i m u l a t i o n   R e p o r t: Verilator 5.030 2024-10-27
-- Verilator: $finish at 611ps; walltime 0.004 s; speed 145.524 ns/s
-- Verilator: cpu 0.004 s on 1 threads; alloced 121 MB
+- Verilator: $finish at 611ps; walltime 0.004 s; speed 132.085 ns/s
+- Verilator: cpu 0.005 s on 1 threads; alloced 121 MB
