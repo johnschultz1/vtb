@@ -13,11 +13,9 @@ scenario:
       -
         name: monitor
         type: onMsgAvail
-        msgID: msgA
       -
         name: predictor
         type: onMsgAvail
-        msgID: msgB
     -
       name: monitor
       callName: monitor
