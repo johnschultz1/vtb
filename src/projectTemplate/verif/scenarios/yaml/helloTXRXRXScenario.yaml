@@ -5,54 +5,82 @@ scenario:
       name: globals
   jobs:
     -
-      name: dlyTask0
+      name: scoreBoard
+      callName: inOrderScoreBoard
+      config: SB
+      finishes: false
+      dependencies:
+      -
+        name: monitor
+        type: onMsgAvail
+        msgID: msgA
+      -
+        name: predictor
+        type: onMsgAvail
+        msgID: msgB
+    -
+      name: monitor
+      callName: monitor
+      config: monitor
+      finishes: false
+    -
+      name: predictor
+      callName: predictor
+      config: predictor
+      finishes: false
+      dependencies:
+      -
+        name: rst
+        type: onFinish
+    -
+      name: dly1
       callName: delay
       config: dly6
     -
-      name: rstTask
+      name: rst
       callName: toggleSeq
       config: rst
     -
-      name: clkTask
+      name: clk
       callName: toggleSeq
       config: clk
       finishes: false
     -
-      name: task1
+      name: hello1
       callName: helloHuman
       dependencies:
       -
-        name: rstTask
+        name: rst
         type: onFinish
     -
-      name: task2
+      name: hello2
       callName: helloHuman
       dependencies:
       -
-        name: rstTask
+        name: rst
         type: onFinish
     -
-      name: dlyTask
+      name: dly2
       callName: delay
       config: dly6
       dependencies:
       -
-        name: rstTask
+        name: rst
         type: onFinish
     -
-      name: task3
+      name: hello3
       callName: helloHuman
       dependencies:
       -
-        name: rstTask
+        name: rst
         type: onFinish
     -
-      name: txTask
+      name: tx
       callName: broadcaster
       config: tx
       dependencies:
       -
-        name: rstTask
+        name: rst
         type: onFinish
     -
       name: rx1
@@ -60,15 +88,13 @@ scenario:
       config: rx1
       dependencies:
       -
-        name: txTask
+        name: tx
         type: onMsgAvail
-        msgID: broadcast
     -
       name: rx2
       callName: receiver
       config: rx2
       dependencies:
       -
-        name: txTask
+        name: tx
         type: onMsgAvail
-        msgID: broadcast

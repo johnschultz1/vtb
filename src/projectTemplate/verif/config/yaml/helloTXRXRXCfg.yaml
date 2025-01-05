@@ -5,7 +5,7 @@ config:
     -
       name: name
       type: strings
-      value: txTask
+      value: tx
     -
       name: content
       type: strings
@@ -16,10 +16,6 @@ config:
       values: 
       - "rx1"
       - "rx2"
-    -
-      name: BROADCASTMSGNAME
-      type: strings
-      value: broadcast
 ---
 config:
   name: rx1
@@ -28,10 +24,6 @@ config:
       name: ID
       type: strings
       value: rx1
-    -
-      name: BROADCASTMSGNAME
-      type: strings
-      value: broadcast
 ---
 config:
   name: rx2
@@ -40,10 +32,6 @@ config:
       name: ID
       type: strings
       value: rx2
-    -
-      name: BROADCASTMSGNAME
-      type: strings
-      value: broadcast
 ---
 config:
   name: dly6
@@ -51,4 +39,4 @@ config:
     -
       name: CYCLES
       type: ints
-      value: 6
+      value: 600

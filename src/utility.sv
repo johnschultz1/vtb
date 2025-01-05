@@ -27,7 +27,6 @@
           automatic string dependencyName;
           automatic string dependencyType;
           automatic string configName;
-          automatic string msgType;
           automatic bit finishes;
           automatic string fields[];
           $fgets(line, fileHandle);
@@ -39,15 +38,12 @@
             configName          = fields[2];
             dependencyName      = fields[3];
             dependencyType      = fields[4];
-            msgType             = fields[5];
-            if (fields[6] == "true") finishes = 1'b1; 
+            if (fields[5] == "true") finishes = 1'b1; 
             else finishes = 1'b0;
-            $display(jobName);
             scenario[jobName].jobConfig                                                             = configs[configName];
             scenario[jobName].jobCallName                                                           = callName;
             scenario[jobName].finishes                                                              = finishes;
             if (dependencyName != "") scenario[jobName].dependencies[dependencyName].dependencyType = getDependencyType(dependencyType);
-            if (dependencyName != "") scenario[jobName].dependencies[dependencyName].messageType    = msgType;
           end
       end
   
@@ -149,4 +145,82 @@
 
   function void printMsg(string message, string jobName, string jobCallName);
     $display($sformatf("[%t][job Manager][%s : %s] %s", $realtime(), jobName, jobCallName, message));
+  endfunction
+
+  function bit compareMsg(msg_t msgA, msg_t msgB);
+
+    // strings compare
+    if (msgA.strings.size() != msgB.strings.size()) begin
+        $display($sformatf("error, message string length mismatch, %d != %d", msgA.strings.size(), msgB.strings.size()));
+        return 0;
+    end
+ 
+    foreach (msgA.strings[x]) begin
+        if (msgA.strings[x] != msgB.strings[x] && x != "NAME") begin
+            $display($sformatf("error, message strings element %s mismatch, %s != %s", x, msgA.strings[x], msgB.strings[x]));
+            return 0;
+        end
+    end
+
+    // stringList compare
+    //if (msgA.stringList.size() != msgB.stringList.size()) begin
+    //    $display($sformatf("error, message stringList length mismatch, %d != %d", msgA.stringList.size(), msgB.stringList.size()));
+    //    return 0;
+    //end
+//
+    //foreach (msgA.stringList[x]) begin
+//
+    //    if (msgA.stringList[x].size() != msgB.stringList[x].size()) begin
+    //        $display($sformatf("error, message stringList length mismatch, %d != %d", msgA.stringList[x].size(), msgB.stringList[x].size()));
+    //        return 0;
+    //    end
+//
+    //    foreach (msgA.string)
+//
+    //    if (msgA.stringList[x] != msgA.stringList[x]) begin
+    //        $display($sformatf("error, message stringList element %s mismatch, %s != %s", x, msgA.stringList[x], msgB.stringList[x]));
+    //        return 0;
+    //    end
+    //end
+   
+    // ints compare
+    if (msgA.ints.size() != msgB.ints.size()) begin
+        $display($sformatf("error, message ints length mismatch, %d != %d", msgA.ints.size(), msgB.ints.size()));
+        return 0;
+    end
+
+    foreach (msgA.ints[x]) begin
+        if (msgA.ints[x] != msgB.ints[x]) begin
+            $display($sformatf("error, message ints element %s mismatch, %d != %d", x, msgA.ints[x], msgB.ints[x]));
+            return 0;
+        end
+    end
+
+    // bits compare
+    if (msgA.bits.size() != msgB.bits.size()) begin
+        $display($sformatf("error, message bits length mismatch, %d != %d", msgA.bits.size(), msgB.bits.size()));
+        return 0;
+    end
+
+    foreach (msgA.bits[x]) begin
+        if (msgA.bits[x] != msgB.bits[x]) begin
+            $display($sformatf("error, message bits element %s mismatch, %b != %b", x, msgA.bits[x], msgB.bits[x]));
+            return 0;
+        end
+    end
+
+    // bool compare
+    if (msgA.bool.size() != msgB.bool.size()) begin
+        $display($sformatf("error, message bool length mismatch, %d != %d", msgA.bool.size(), msgB.bool.size()));
+        return 0;
+    end
+
+    foreach (msgA.bool[x]) begin
+        if (msgA.bool[x] != msgB.bool[x]) begin
+            $display($sformatf("error, message bool element %s mismatch, %b != %b", x, msgA.bool[x], msgB.bool[x]));
+            return 0;
+        end
+    end
+
+    return 1;
   endfunction

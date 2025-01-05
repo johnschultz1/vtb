@@ -1,20 +1,9 @@
 class automatic toggleSeq;
-    string id;
-    //virtual dutInterface vif;
-
-
-   // function new(string id, dutIf);
-       // this.id =id;
-      //  vif = dutIf;
-  //  endfunction
 
       `startJob
-     //`taskStart(toggleSeq)
-
         automatic  msg_t configuration = cfg; 
         bit sigInit;
         // init 
-        $display(configuration.strings["SIG"]);
         sigInit = configuration.ints["SIGINIT"];
         vif.setDut(configuration.strings["SIG"],sigInit);
         #(configuration.ints["TOGGLEINITDELAY"]);

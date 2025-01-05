@@ -5,7 +5,7 @@ export WD="$(pwd -P)"
 export VTBHOME=$WD
 # location to Verilator home dir, uncomment and set
 #export VERIHOME=''
-# location to Verilator exe
+# location to Verilator exe VERILATOR_ROOT=
 export VERIEXE='$VERIHOME/bin/verilator'
 # options to pass to verilator
 export VERIOPTS=' --debug --Wno-lint --sv --timing --trace --public --trace-structs '

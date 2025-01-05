@@ -59,27 +59,27 @@ package scenarioPkg;
         jobStatus[jobName].jobStatus = "INIT";
     endtask
 
-    task automatic initjobMsg(input string jobName, input string msgType, input string dependencyName);
-        string eventName = {jobName,"_", msgType,"_",dependencyName};
+    task automatic initjobMsg(input string jobName, input string dependencyName);
+        string eventName = {jobName,"_",dependencyName};
         msgEvents[eventName] = new();
-        msgQ[jobName][msgType][dependencyName] = {};    
+        msgQ[jobName][dependencyName] = {};    
     endtask
 
     // TODO: could also conditionally store msg based on logging level
-    task automatic triggerNewMessageProducedEvent(input string jobName, input string msgType, input string dependencyName);
-         string eventName = {jobName,"_", msgType,"_",dependencyName};
+    task automatic triggerNewMessageProducedEvent(input string jobName, input string dependencyName);
+         string eventName = {jobName,"_",dependencyName};
          msgEvents[eventName].setEvent();
-         jobStatus[jobName].producedMsgTime[msgType].push_back($realtime);
+         jobStatus[jobName].producedMsgTime.push_back($realtime);
     endtask
 
-    task automatic waitOnMsgAvail(input string jobName, input string msgType, input string dependencyName);
-        string eventName = {jobName,"_", msgType,"_",dependencyName};
+    task automatic waitOnMsgAvail(input string jobName, input string dependencyName);
+        string eventName = {jobName,"_",dependencyName};
         string jobDoneEvent = {jobName,"_","FINISHED"};
         @(msgEvents[eventName].e, jobEvents[jobDoneEvent].e.triggered );   
     endtask
 
-    task automatic triggerNewMessageConsumedEvent(input string jobName, input string msgType);
-       jobStatus[jobName].consumedMsgTime[msgType].push_back($realtime);
+    task automatic triggerNewMessageConsumedEvent(input string jobName);
+       jobStatus[jobName].consumedMsgTime.push_back($realtime);
     endtask
 
 endpackage

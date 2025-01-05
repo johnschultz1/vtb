@@ -45,9 +45,8 @@ type Job struct {
 }
 
 type Dependency struct {
-	Name  string `yaml:"name"`
-	Type  string `yaml:"type"`
-	MsgID string `yaml:"msgID,omitempty"`
+	Name string `yaml:"name"`
+	Type string `yaml:"type"`
 }
 
 type Config struct {
@@ -117,7 +116,6 @@ func LoadYamlFiles(filePatterns []string, projectDir string, outputDir string, t
 					return fmt.Errorf("failed to decode scenario in file %s: %w", filename, err)
 				}
 				// Create CSV for scenario
-				print("\n\n making making \n\n")
 				if err := writeScenarioToCSV(&scenario, outputDir+getFilenameWithoutSuffix(scenario.Name)+".csv"); err != nil {
 					return fmt.Errorf("failed to write scenario CSV for file %s: %w", filename, err)
 				}
@@ -128,7 +126,6 @@ func LoadYamlFiles(filePatterns []string, projectDir string, outputDir string, t
 				}
 			} else if _, isConfig := root["config"]; isConfig {
 				var config Config
-				print("found cfg")
 				raw, _ := yaml.Marshal(root["config"])
 				if err := yaml.Unmarshal(raw, &config); err != nil {
 					return fmt.Errorf("failed to decode config in file %s: %w", filename, err)
@@ -234,7 +231,7 @@ func writeScenarioToCSV(scenario *Scenario, filename string) error {
 	defer writer.Flush()
 
 	// Write header
-	header := []string{"JobName", "CallName", "Config", "DependencyName", "DependencyType", "MsgID", "Finishes"}
+	header := []string{"JobName", "CallName", "Config", "DependencyName", "DependencyType", "Finishes"}
 	if err := writer.Write(header); err != nil {
 		return fmt.Errorf("failed to write header: %w", err)
 	}
@@ -246,13 +243,13 @@ func writeScenarioToCSV(scenario *Scenario, filename string) error {
 			finishes = Job.Finishes
 		}
 		if len(Job.Dependencies) == 0 {
-			row := []string{Job.Name, Job.CallName, Job.Config, "", "", "", finishes}
+			row := []string{Job.Name, Job.CallName, Job.Config, "", "", finishes}
 			if err := writer.Write(row); err != nil {
 				return fmt.Errorf("failed to write Job row: %w", err)
 			}
 		} else {
 			for _, dep := range Job.Dependencies {
-				row := []string{Job.Name, Job.CallName, Job.Config, dep.Name, dep.Type, dep.MsgID, finishes}
+				row := []string{Job.Name, Job.CallName, Job.Config, dep.Name, dep.Type, finishes}
 				if err := writer.Write(row); err != nil {
 					return fmt.Errorf("failed to write dependency row: %w", err)
 				}

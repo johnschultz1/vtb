@@ -12,7 +12,7 @@
             currentJob = jobs[x];
             jobName = x;
             foreach (currentJob.dependencies[y]) begin
-                if (currentJob.dependencies[y].dependencyType == onMsgAvail) scenarioPkg::initjobMsg(y, currentJob.dependencies[y].messageType, jobName);
+                if (currentJob.dependencies[y].dependencyType == onMsgAvail) scenarioPkg::initjobMsg(y, jobName);
             end
             if (currentJob.finishes) scenarioPkg::incrNumThreads();
         end

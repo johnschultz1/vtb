@@ -27,8 +27,7 @@ package typesPkg;
     // Message queue types
     typedef msg_t msg_q_t[$];                       // Queue of messages
     typedef msg_q_t dependency_q_t[string];         // Dependency queues
-    typedef dependency_q_t msg_type_q_t[string];    // Message type queues
-    typedef msg_type_q_t job_q_t[string];          // job queues
+    typedef dependency_q_t job_q_t[string];          // job queues
 
     // *********************************************************************
     //   _______        _      ____        _ _     _   _____        __      
@@ -41,7 +40,6 @@ package typesPkg;
     // *********************************************************************                                                                      
     typedef enum {onFinish, onMsgAvail} dependency_e;
     typedef struct {
-        string       messageType;
         dependency_e dependencyType;
     } dependency_t;
     
@@ -73,8 +71,8 @@ package typesPkg;
         time jobEndTime; // when job ended
         string jobStatus; // if the job is done or running or error
         bit done;
-        msgTypeTimes_t consumedMsgTime[string];
-        msgTypeTimes_t producedMsgTime[string];
+        msgTypeTimes_t consumedMsgTime;
+        msgTypeTimes_t producedMsgTime;
     } jobStatus_t;
 
     typedef jobStatus_t jobsStatus_t[string];

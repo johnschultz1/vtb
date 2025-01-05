@@ -1,5 +1,5 @@
 scenario:
-  name: scenario1 
+  name: basicSB 
   globalconfig:
     -
       name: globals
@@ -46,20 +46,6 @@ scenario:
       config: clk
       finishes: false
     -
-      name: hello1
-      callName: helloHuman
-      dependencies:
-      -
-        name: rst
-        type: onFinish
-    -
-      name: hello2
-      callName: helloHuman
-      dependencies:
-      -
-        name: rst
-        type: onFinish
-    -
       name: dly2
       callName: delay
       config: dly6
@@ -67,34 +53,3 @@ scenario:
       -
         name: rst
         type: onFinish
-    -
-      name: hello3
-      callName: helloHuman
-      dependencies:
-      -
-        name: rst
-        type: onFinish
-    -
-      name: tx
-      callName: broadcaster
-      config: tx
-      dependencies:
-      -
-        name: rst
-        type: onFinish
-    -
-      name: rx1
-      callName: receiver
-      config: rx1
-      dependencies:
-      -
-        name: tx
-        type: onMsgAvail
-    -
-      name: rx2
-      callName: receiver
-      config: rx2
-      dependencies:
-      -
-        name: tx
-        type: onMsgAvail

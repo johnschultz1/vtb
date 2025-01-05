@@ -1,0 +1,8 @@
+---
+config:
+  name: monitor
+  vars:
+    -
+      name: SIG
+      type: strings
+      value: o_bit8Signal2
