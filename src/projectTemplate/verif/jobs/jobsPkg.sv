@@ -1,6 +1,6 @@
 package jobsPkg;
     import utilityPkg::*;
-    
+
     `include "jobUtil.sv";
     `include "toggleSeq.sv";
     `include "helloHuman.sv";
@@ -10,5 +10,7 @@ package jobsPkg;
     `include "receiver.sv"
     `include "broadcaster.sv"
     `include "delay.sv"
+    `include "dataGen.sv"
+    `include "driver.sv"
 
 endpackage

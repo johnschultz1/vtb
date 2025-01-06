@@ -70,4 +70,14 @@ interface dutInterface;
         endcase
     endtask
 
+    // Task to wait on a Dut Signal to equal a value
+    task waitOnSig(input string port_name, input int value);
+        case (port_name)
+            {{- range .Ports }}
+                {{ pad (printf "\"%s\":" .GetName) $maxLabel }} wait({{.GetName}} == value);
+            {{- end }}
+            default: $error("Invalid output port name: %s", port_name);
+        endcase
+    endtask
+
 endinterface

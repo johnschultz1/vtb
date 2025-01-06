@@ -15,4 +15,11 @@ module TB;
       // start scenario
       scenarioGen(scenarioPkg::scenario);
     end
+
+    // VCD dump
+    initial begin
+      $dumpfile("waveform.vcd");
+      $dumpvars(0, TB);      // Dump variables for the entire testbench hierarchy
+    end
+
 endmodule

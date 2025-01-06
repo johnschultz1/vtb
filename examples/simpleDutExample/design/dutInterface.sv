@@ -93,4 +93,21 @@ interface dutInterface;
         endcase
     endtask
 
+    // Task to wait on a Dut Signal to equal a value
+    task waitOnSig(input string port_name, input int value);
+        case (port_name)
+                "clk":           wait(clk == value);
+                "rst":           wait(rst == value);
+                "i_bitSignal1":  wait(i_bitSignal1 == value);
+                "i_bitSignal2":  wait(i_bitSignal2 == value);
+                "i_bit32Signal1": wait(i_bit32Signal1 == value);
+                "i_bit8Signal2": wait(i_bit8Signal2 == value);
+                "o_bitSignal1":  wait(o_bitSignal1 == value);
+                "o_bitSignal2":  wait(o_bitSignal2 == value);
+                "o_bit32Signal1": wait(o_bit32Signal1 == value);
+                "o_bit8Signal2": wait(o_bit8Signal2 == value);
+            default: $error("Invalid output port name: %s", port_name);
+        endcase
+    endtask
+
 endinterface

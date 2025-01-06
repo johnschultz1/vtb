@@ -44,6 +44,7 @@ package typesPkg;
     } dependency_t;
     
     typedef dependency_t dependencies_t[string];
+    typedef dependency_t dependencyArray_t[];
 
     
     typedef struct {
