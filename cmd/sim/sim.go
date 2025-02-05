@@ -18,9 +18,9 @@ var SimCmd = &cobra.Command{
 	Long:  ``,
 	Run: func(cmd *cobra.Command, args []string) {
 		// check if project dir exists $PROJECTDIR
-		//projectDir, _ := cmd.Flags().GetString(os.ExpandEnv("projectDir"))
-		projectDir := os.ExpandEnv("$PROJECTDIR/")
-		print(projectDir)
+		//projectName, _ := cmd.Flags().GetString(os.ExpandEnv("projectName"))
+		projectDir := os.ExpandEnv("$PROJECTSHOME/$PROJECTNAME")
+		projectDir = projectDir + "/"
 		info, err := os.Stat(projectDir)
 		exists := err == nil && info.IsDir()
 		if !exists {
@@ -45,7 +45,7 @@ var SimCmd = &cobra.Command{
 
 		// parse YAML files
 		scenario, _ := cmd.Flags().GetString(os.ExpandEnv("scenario"))
-		files, _ := cmd.Flags().GetString("yamlFiles")
+		files := projectDir + "/verif/config/yaml/*.yaml," + projectDir + "/verif/scenarios/yaml/*.yaml"
 		fileList := strings.Split(files, ",")
 		if err := designModel.LoadYamlFiles(fileList, projectDir, outputDir, scenario); err != nil {
 			fmt.Printf("Error processing files: %v", err)
@@ -102,12 +102,12 @@ func init() {
 	// and all subcommands, e.g.:
 	// createCmd.PersistentFlags().String("foo", "", "A help for foo")
 
-	// Cobra supports local flags which will only run when this command
+	// Cobra supports local flags which will only run when this commaECTDIR/verif/config/yaml/*.yamlnd
 	// is called directly, e.g.:
-	//SimCmd.Flags().StringP("projectDir", "p", "./", "location of project dir")
-	SimCmd.Flags().StringP("yamlFiles", "y", "$PROJECTDIR/verif/config/yaml/*.yaml,$PROJECTDIR/verif/scenarios/yaml/*.yaml", "all yaml scenario/files")
+	//SimCmd.Flags().StringP("projectName", "p", "./", "location of project dir")
+	//SimCmd.Flags().StringP("yamlFiles", "y", "$PROJECTDIR/verif/scenarios/yaml/*.yaml", "all yaml scenario/files")
 	SimCmd.Flags().StringP("scenario", "s", "", "name of the scenario to run")
 	SimCmd.Flags().StringP("options", "o", "", "runtime options")
-	//SimCmd.MarkFlagRequired("projectDir")
+	//SimCmd.MarkFlagRequired("projectName")
 	SimCmd.MarkFlagRequired("scenario")
 }

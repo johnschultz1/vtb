@@ -1,0 +1,34 @@
+scenario:
+  name: dataDrive 
+  globalconfig:
+    -
+      name: globals
+  jobs:
+    -
+      name: dly1
+      callName: delay
+      config: dly6
+    -
+      name: rst
+      callName: toggleSeq
+      config: rst
+    -
+      name: clk
+      callName: toggleSeq
+      config: clk
+      finishes: false
+    -
+      name: driver
+      callName: driver
+      config: driver
+      dependencies:
+      -
+        name: dataGen
+        type: onMsgAvail
+      -
+        name: rst
+        type: onFinish
+    -
+      name: dataGen
+      callName: dataGen
+      config: dataGen

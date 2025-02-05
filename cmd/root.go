@@ -10,7 +10,8 @@ import (
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 
-	"vtb/cmd/create"
+	"vtb/cmd/imports"
+	"vtb/cmd/new"
 	"vtb/cmd/sim"
 )
 
@@ -54,7 +55,8 @@ func init() {
 	rootCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
 
 	// Add Subcmds
-	rootCmd.AddCommand(create.CreateCmd)
+	rootCmd.AddCommand(new.NewCmd)
+	rootCmd.AddCommand(imports.ImportCmd)
 	rootCmd.AddCommand(sim.SimCmd)
 }
 
