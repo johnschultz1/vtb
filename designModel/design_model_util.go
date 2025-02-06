@@ -106,7 +106,7 @@ func GenDutWrapper(design DesignModel, projectDir string, top string, fileType s
 		file, _ := os.OpenFile(envFile, os.O_WRONLY|os.O_CREATE|os.O_TRUNC, 0770)
 		file.WriteString("export PROJECTDIR=" + projectDir + "\n")
 		// includes to pass to verilator
-		file.WriteString("export VERIINC='-I$VERIHOME/include -I$VTBHOME/src -I$PROJECTDIR/verif/run/vtb'")
+		file.WriteString("export VERIINC='-I$VERIHOME/include -I$VTBHOME/src -I$PROJECTSHOME/$PROJECTNAME/verif/run/vtb'")
 		defer file.Close()
 
 		// create design .f file
@@ -114,8 +114,8 @@ func GenDutWrapper(design DesignModel, projectDir string, top string, fileType s
 		// Open the file for writing, creating it if it doesn't exist, or truncating it if it does
 		file, _ = os.OpenFile(designSrcFile, os.O_WRONLY|os.O_CREATE|os.O_TRUNC, 0770)
 		file.WriteString(dutFiles + "\n")
-		file.WriteString("$PROJECTDIR//design/dutInterface.sv" + "\n")
-		file.WriteString("$PROJECTDIR//design/dutWrapper.sv" + "\n")
+		file.WriteString("$PROJECTSHOME/$PROJECTNAME//design/dutInterface.sv" + "\n")
+		file.WriteString("$PROJECTSHOME/$PROJECTNAME//design/dutWrapper.sv" + "\n")
 		defer file.Close()
 	}
 }

@@ -15,7 +15,7 @@ var ProjCmd = &cobra.Command{
 	Long:  `A dir structure will be created for you with a generated with $PROJECTSHOME`,
 	Run: func(cmd *cobra.Command, args []string) {
 		projectDir, _ := cmd.Flags().GetString("projectName")
-		projectDir = os.ExpandEnv("$PROJECTSHOME") + projectDir
+		projectDir = os.ExpandEnv("$PROJECTSHOME") + os.ExpandEnv(projectDir)
 		util.CreateDirs(projectDir)
 		designDir := projectDir + "/design/"
 		util.CreateDirs(designDir)

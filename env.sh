@@ -10,7 +10,7 @@ export VERIEXE='$VERIHOME/bin/verilator'
 # options to pass to verilator
 export VERIOPTS=' --debug --Wno-lint --sv --timing --trace --public --trace-structs '
 # includes to pass to verilator
-export VERIINC=' -I$VERIHOME/include -I$VTBHOME/src -I$PROJECTDIR/verif/run/vtb '
+export VERIINC=' -I$VERIHOME/include -I$VTBHOME/src -I$PROJECTSHOME/$PROJECTNAME/verif/run/vtb '
 # location to Slang exe
 export SLANGEXE='slang'
 # options to pass to slang

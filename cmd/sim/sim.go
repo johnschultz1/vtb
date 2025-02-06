@@ -18,8 +18,8 @@ var SimCmd = &cobra.Command{
 	Long:  ``,
 	Run: func(cmd *cobra.Command, args []string) {
 		// check if project dir exists $PROJECTDIR
-		//projectName, _ := cmd.Flags().GetString(os.ExpandEnv("projectName"))
-		projectDir := os.ExpandEnv("$PROJECTSHOME/$PROJECTNAME")
+		projectName, _ := cmd.Flags().GetString(os.ExpandEnv("projectName"))
+		projectDir := os.ExpandEnv("$PROJECTSHOME/") + os.ExpandEnv(projectName)
 		projectDir = projectDir + "/"
 		info, err := os.Stat(projectDir)
 		exists := err == nil && info.IsDir()

@@ -18,6 +18,4 @@ var NewCmd = &cobra.Command{
 
 func init() {
 	NewCmd.AddCommand(proj.ProjCmd)
-	proj.ProjCmd.Flags().StringP("projectName", "p", "", "Name of project to be placed in $PROJECTSHOME")
-	proj.ProjCmd.MarkFlagRequired("projectName")
 }

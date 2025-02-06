@@ -19,7 +19,6 @@ var ImportCmd = &cobra.Command{
 func init() {
 	ImportCmd.AddCommand(dut.ImportCmd)
 
-	dut.ImportCmd.Flags().StringP("projectName", "p", "$PROJECTNAME", "Name of project to be placed in $PROJECTSHOME/")
 	dut.ImportCmd.Flags().StringP("designFiles", "f", "", "Pointer to design compile/elab file, can be source file or .F,...")
 	dut.ImportCmd.Flags().StringP("designTop", "t", "", "name of the top level design module")
 	dut.ImportCmd.MarkFlagRequired("designFiles")
