@@ -64,11 +64,16 @@ func CreateDirs(path string) error {
 
 // copyFile copies a single file from src to dst
 func copyFile(src, dst string) {
+	srcInfo, err := os.Stat(src)
+	if err != nil {
+		ErrCheck(err, "failed to stat source file")
+	}
+
 	srcFile, err := os.Open(src)
 	ErrCheck(err, "failed to open source file")
 	defer srcFile.Close()
 
-	dstFile, err := os.Create(dst)
+	dstFile, err := os.OpenFile(dst, os.O_CREATE|os.O_WRONLY|os.O_TRUNC, srcInfo.Mode())
 	ErrCheck(err, "failed to create destination file")
 	defer dstFile.Close()
 
@@ -77,6 +82,10 @@ func copyFile(src, dst string) {
 
 	err = dstFile.Sync()
 	ErrCheck(err, "failed to flush destination file")
+
+	// Explicitly set the permissions to match the source file
+	err = os.Chmod(dst, srcInfo.Mode())
+	ErrCheck(err, "failed to set permissions on destination file")
 }
 
 func copyDirectory(srcDir, dstDir string) {

@@ -99,28 +99,34 @@ onFinish, onMsgAvail
 When a parent job finishes and a child has this relationship, the child job will be started. This represents a pure job trigger, with no msg communication between the jobs. If onMsgAvail is used in combination with onFinish, the child will wait for the parent job to finish and then check to see if there is any message from the parent available, this can be used to exchange information.
 ##### onMsgAvail
 When a parent job has a message published, the child job will be started and passed messages as long as they are available from the parent job. If a parent job finishes and all of its messages have been consumed by the child job then the child job will also finish. When onFinish and onMsgAvail on used togehther, all of the onFinish jobs will be completed before the onMsgAvail dependencies are checked to have data available for the child Job. 
-
+# Dependencies
+Inorder to build, docker has to be installed
+https://docs.docker.com/engine/install/
+A taskfile is also included here, so taskfile would have to be installed to run it
+https://taskfile.dev/installation/
 # Build Steps
+A docker container has been created and can be checked out from docker hub with
+```` ````
+It can also be built with:
 
-## Dependencies
-Inorder to run vtb you need to have the following tools installed:
-1) go, at least version go1.23.2 linux/amd64
-2) slang version 7.0.14+2ba40871 https://github.com/MikePopoloski/slang
-3) verilator version 5.030 2024-10-27 rev v5.030-45-g2cb1a8de7 https://github.com/verilator
+```docker build -t vtb:v0 .```
 
-once those are build you need to set the env variables associated with thier binaries. An example script is provided in env.sh
+The go executable can also be generated seperatly with ```` go build ```` and the env variables in vtb/build.sh or the dockerfile set to the locations of the dependencies.
+## Cmds
+The entrypoint for the container is the vtb go binary. The available cmd details below.
+### new proj
+A project is a copy of the vtb/src/projectTemplate. ENV variable $PROJECTSHOME and $PROJECTNAME should be set before running. THey can also be set in the call to the container. The below example will create a copy of the projectTemplate in $PROJECTSHOME/$PROJECTNAME and mount the data on the host system in the same location.
+````
+task newProj -- -n projName
+````
+### import
+To import the dut, a design .f file with pointers to the dut and its dependencies (-f) and a design top name (-t) must be provided. The below command imports an example dut from the vtb example directory, parses it and creates a dut wrapper and dut interface based on it.
+````
+cd projectDirectory
+task import -- -t dutTopName -f /../../path/dutFileList.f
+````
+## sim
+The sim cmd currently launchs verilator but could be configured to launch others. The below example runs an a prepared scenario on the dut that was imported with the import dut command.
+```
 
-## build go exe
-the vtb executable can be build with go build and run with ./vtb
-## Create Project Directory
-An example project has been created already in in vtb/examples/simpleDutExample. This example project was create with the following cmd: 
 ```
-./vtb create tb -f ./examples/duts/simpleDut.f -t simpleDut -p ./examples/simpleDutExample/
-```
-In this stage, a design file .f, a design top name, and a project must be provided. A projEnv.sh is also generated that sets the $PROJECTDIR variable that makes running sims easier and should be sourced.
-## Run a Sim
-The example project can be run with
-```
-./vtb sim -s scenario1
-```
-All yaml files within the ./examples/simpleDutExample/verif/scenarios are processed with this command and any scenarion within them can be run.

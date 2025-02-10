@@ -16,8 +16,7 @@ var ImportCmd = &cobra.Command{
 	Long:  `A dir structure will be created for you with a generated a dut wrapper and dut interface`,
 	Run: func(cmd *cobra.Command, args []string) {
 		// Project dir
-		projectDir, _ := cmd.Flags().GetString("projectName")
-		projectDir = os.ExpandEnv("$PROJECTSHOME") + os.ExpandEnv(projectDir)
+		projectDir := os.ExpandEnv("$PROJECTSHOME") + os.ExpandEnv("$PROJECTNAME")
 		designFiles, _ := cmd.Flags().GetString(os.ExpandEnv("designFiles"))
 		// Design Files Existence check
 		if !(strings.Contains(designFiles, ".f") || strings.Contains(designFiles, ".F")) {

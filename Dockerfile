@@ -1,21 +1,41 @@
 # Start from the Alpine base image
 FROM ubuntu:24.10
 
+# Set the HOME environment variable
+ENV USER='vtbUser'
+ENV HOME=/home/${USER}/
 # Create the user
-RUN groupadd vtbUser \
-    && useradd -g vtbUser -m vtbUser -s /bin/bash \
+RUN groupadd ${USER} \
+    && useradd -g ${USER} -m ${USER} -s /bin/bash \
     && apt-get update \
     && apt-get install --no-install-recommends -y sudo \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/* \
-    && echo vtbUser ALL=\(root\) NOPASSWD:ALL > /etc/sudoers.d/vtbUser \
-    && chmod 0440 /etc/sudoers.d/vtbUser
-
-# Set the HOME environment variable
-ENV HOME=/home/vtbUser/
-
+    && echo ${USER} ALL=\(root\) NOPASSWD:ALL > /etc/sudoers.d/${USER} \
+    && chmod 0440 /etc/sudoers.d/${USER}
 # Set the working directory to the user's home directory
 WORKDIR $HOME
+# location to VTB
+ENV VTBHOME="/usr/local/vtb/"
+# option to set project dir in container
+RUN mkdir /VTB_PROJECTS/
+RUN chmod 777 /VTB_PROJECTS
+
+ENV PROJECTSHOME=/VTB_PROJECTS/
+ENV PROJECTNAME='newPrj'
+ENV WORK=$PROJECTSHOME/$PROJECTNAME/
+# location to Verilator home dir, uncomment and set
+ENV VERIHOME='/usr/local/verilator/'
+# location to Verilator exe
+ENV VERIEXE='${VERIHOME}/bin/verilator'
+# options to pass to verilator
+ENV VERIOPTS=' --debug --Wno-lint --sv --timing --trace --public --trace-structs '
+# includes to pass to verilator
+ENV VERIINC=' -I${VERIHOME}/include -I${VTBHOME}/src -I${PROJECTSHOME/$PROJECTNAME}/verif/run/vtb '
+# location to Slang exe
+ENV SLANGEXE='slang'
+# options to pass to slang
+ENV SLANGOPTS='--allow-toplevel-iface-ports'
 
 RUN apt-get update \
     && DEBIAN_FRONTEND=noninteractive \
@@ -89,30 +109,7 @@ ENV PATH="/usr/local/go/bin:${PATH}"
 ENV PATH="/usr/local/vtb/bin:${PATH}"
 ENV PATH="/usr/local/verilator/bin:${PATH}"
 
-# location to VTB
-ENV VTBHOME="/usr/local/vtb/"
-# option to set project dir in container
-ENV PROJECTSHOME=${HOME}/vtbUser/VTB_PROJECTS/
-ENV PROJECTNAME='newPrj'
-# location to Verilator home dir, uncomment and set
-ENV VERIHOME='/usr/local/verilator/'
-# location to Verilator exe
-ENV VERIEXE='${VERIHOME}/bin/verilator'
-# options to pass to verilator
-ENV VERIOPTS=' --debug --Wno-lint --sv --timing --trace --public --trace-structs '
-# includes to pass to verilator
-ENV VERIINC=' -I${VERIHOME}/include -I${VTBHOME}/src -I${PROJECTSHOME/$PROJECTNAME}/verif/run/vtb '
-# location to Slang exe
-ENV SLANGEXE='slang'
-# options to pass to slang
-ENV SLANGOPTS='--allow-toplevel-iface-ports'
-
-USER vtbUser
-
-# gtk wave viewing exports
-#export GTK_MODULES=gail:atk-bridge
-#export GTK_PATH=/usr/lib/x86_64-linux-gnu/gtk-2.0/modules
-#export LD_LIBRARY_PATH=/usr/local/lib/:$LD_LIBRARY_PATH
+USER $USER
 
 # command to start your application
 ENTRYPOINT ["/usr/local/vtb/bin/vtb"]
