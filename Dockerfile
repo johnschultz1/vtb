@@ -112,4 +112,4 @@ ENV PATH="/usr/local/verilator/bin:${PATH}"
 USER $USER
 
 # command to start your application
-ENTRYPOINT ["/usr/local/vtb/bin/vtb"]
+ENTRYPOINT ["/usr/local/vtb/entry.sh"]

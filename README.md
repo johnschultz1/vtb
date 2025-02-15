@@ -117,7 +117,7 @@ The entrypoint for the container is the vtb go binary. The available cmd details
 ### new proj
 A project is a copy of the vtb/src/projectTemplate. ENV variable $PROJECTSHOME and $PROJECTNAME should be set before running. THey can also be set in the call to the container. The below example will create a copy of the projectTemplate in $PROJECTSHOME/$PROJECTNAME and mount the data on the host system in the same location.
 ````
-task newProj -- -n projName
+task newProj Name=projName
 ````
 ### import
 To import the dut, a design .f file with pointers to the dut and its dependencies (-f) and a design top name (-t) must be provided. The below command imports an example dut from the vtb example directory, parses it and creates a dut wrapper and dut interface based on it.

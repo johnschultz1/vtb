@@ -17,10 +17,7 @@ var SimCmd = &cobra.Command{
 	Short: "run testbench",
 	Long:  ``,
 	Run: func(cmd *cobra.Command, args []string) {
-		// check if project dir exists $PROJECTDIR
-		projectName, _ := cmd.Flags().GetString(os.ExpandEnv("$PROJECTNAME"))
-		projectDir := os.ExpandEnv("$PROJECTSHOME/") + os.ExpandEnv(projectName)
-		projectDir = projectDir + "/"
+		projectDir := os.ExpandEnv("$WORK")
 		info, err := os.Stat(projectDir)
 		exists := err == nil && info.IsDir()
 		if !exists {
@@ -45,7 +42,7 @@ var SimCmd = &cobra.Command{
 
 		// parse YAML files
 		scenario, _ := cmd.Flags().GetString(os.ExpandEnv("scenario"))
-		files := projectDir + "/verif/config/yaml/*.yaml," + projectDir + "/verif/scenarios/yaml/*.yaml"
+		files := os.ExpandEnv("$YAMLFILES")
 		fileList := strings.Split(files, ",")
 		if err := designModel.LoadYamlFiles(fileList, projectDir, outputDir, scenario); err != nil {
 			fmt.Printf("Error processing files: %v", err)

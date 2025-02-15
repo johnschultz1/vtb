@@ -1,27 +1,25 @@
 /*
 Copyright © 2024 NAME HERE <EMAIL ADDRESS>
 */
-package imports
+package analyze
 
 import (
-	"vtb/cmd/imports/dut"
+	"vtb/cmd/analyze/dut"
 
 	"github.com/spf13/cobra"
 )
 
 // createCmd represents the create command
-var ImportCmd = &cobra.Command{
-	Use:   "import",
+var AnalyzeCmd = &cobra.Command{
+	Use:   "analyze",
 	Short: "Use to bring in external information",
 	Long:  ` vtb import dut [options]`,
 }
 
 func init() {
-	ImportCmd.AddCommand(dut.ImportCmd)
+	AnalyzeCmd.AddCommand(dut.ImportCmd)
 
-	dut.ImportCmd.Flags().StringP("designFiles", "f", "", "Pointer to design compile/elab file, can be source file or .F,...")
 	dut.ImportCmd.Flags().StringP("designTop", "t", "", "name of the top level design module")
-	dut.ImportCmd.MarkFlagRequired("designFiles")
 	dut.ImportCmd.MarkFlagRequired("designTop")
 
 	// Here you will define your flags and configuration settings.

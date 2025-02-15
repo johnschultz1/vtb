@@ -10,7 +10,7 @@ import (
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 
-	"vtb/cmd/imports"
+	"vtb/cmd/analyze"
 	"vtb/cmd/new"
 	"vtb/cmd/sim"
 )
@@ -51,7 +51,7 @@ func init() {
 
 	// Add Subcmds
 	rootCmd.AddCommand(new.NewCmd)
-	rootCmd.AddCommand(imports.ImportCmd)
+	rootCmd.AddCommand(analyze.AnalyzeCmd)
 	rootCmd.AddCommand(sim.SimCmd)
 }
 

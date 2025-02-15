@@ -9,8 +9,7 @@ tasks:
       - name: NAME
     cmds:
       - '[ -d "{{ .HOME }}/VTB_PROJECTS/" ] || mkdir -p "{{ .HOME }}/VTB_PROJECTS/"'
-      - docker run -it -v {{ .HOME }}/VTB_PROJECTS/:/VTB_PROJECTS/ --user $(id -u):$(id -g) vtb:v0 new proj -n {{.NAME}}
-      - cd {{ .HOME }}/VTB_PROJECTS/{{.NAME}}/
+      - docker run -rm -it -v {{ .HOME }}/VTB_PROJECTS/:/VTB_PROJECTS/ --user $(id -u):$(id -g) vtb:v0 new proj -n {{.NAME}}
 
   build:
     cmds:
@@ -18,7 +17,7 @@ tasks:
 
   openContainer:
     cmds:
-      - docker run -it -v {{ .HOME }}/VTB_PROJECTS/:/VTB_PROJECTS/ --entrypoint /bin/bash vtb:v0 {{.CLI_ARGS}}
+      - docker run -rm -it -v {{ .HOME }}/VTB_PROJECTS/:/VTB_PROJECTS/ --entrypoint /bin/bash --user $(id -u):$(id -g) vtb:v0 {{.CLI_ARGS}}
 
   import:
     requires:
@@ -27,25 +26,11 @@ tasks:
       - name: PROJECTSHOME
     cmds: 
       - |
-        "docker run -it \
+        "docker run -rm -it \
         --user $(id -u):$(id -g) \
         -v {{ .HOME }}/VTB_PROJECTS/:/VTB_PROJECTS \
         -e {{ .PROJECTSHOME }}=/VTB_PROJECTS \
         -e {{ .PROJECTNAME }}={{ .PROJECTNAME }} vtb:v0 import dut {{.CLI_ARGS}}"
-
-  own:
-    requires:
-      vars:
-      - name: DIR
-      - name: GROUP
-      - name: PROJECTSHOME
-    vars:
-      USER:
-        sh: whoami
-    cmds:
-      - sudo chown {{.USER}}:{{ .GROUP}} {{.PROJECTSHOME}}/{{.DIR}} -R
-      - find {{.PROJECTSHOME}}/{{.DIR}} -type d -exec chmod 755 {} \;
-      - find {{.PROJECTSHOME}}/{{.DIR}} -type f -exec chmod 644 {} \;
 
   dockerPush:
     cmds:

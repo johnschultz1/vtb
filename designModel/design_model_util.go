@@ -15,6 +15,7 @@ import (
 func GenerateSlangAST(designFiles string, designTop string, outputDir string, fileName string) {
 	slangEXE := os.ExpandEnv("$SLANGEXE")
 	slangOpts := os.ExpandEnv("$SLANGOPTS")
+	fmt.Print(designFiles)
 	cmd := exec.Command("bash", "-c", fmt.Sprintf("%s --top %s %s -ast-json %s/%s %s", slangEXE, designTop, slangOpts, outputDir, fileName, designFiles))
 	cmd.Dir = "./"
 	output, err := cmd.CombinedOutput()

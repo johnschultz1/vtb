@@ -30,8 +30,13 @@ var ProjCmd = &cobra.Command{
 		envFile := os.ExpandEnv(projectDir) + "/.env"
 		// Open the file for writing, creating it if it doesn't exist, or truncating it if it does
 		file, _ := os.OpenFile(envFile, os.O_WRONLY|os.O_CREATE|os.O_TRUNC, 0770)
+		work := os.ExpandEnv(projectsHome) + os.ExpandEnv(projectName) + "/"
 		file.WriteString("PROJECTSHOME=" + os.ExpandEnv(projectsHome) + "\n")
 		file.WriteString("PROJECTNAME=" + os.ExpandEnv(projectName) + "\n")
+		file.WriteString("WORK=" + work + "\n")
+		file.WriteString("YAMLFILES=" +
+			"$WORK/verif/config/yaml/*.yaml,\\\n" +
+			"$WORK/verif/scenarios/yaml/*.yaml" + "\\\n")
 		defer file.Close()
 
 		fmt.Printf("Project successfully generated in %s\n", projectDir)
