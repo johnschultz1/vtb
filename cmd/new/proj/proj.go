@@ -3,6 +3,7 @@ package proj
 import (
 	"fmt"
 	"os"
+	"path/filepath"
 	"vtb/util"
 
 	"github.com/spf13/cobra"
@@ -12,38 +13,74 @@ import (
 var ProjCmd = &cobra.Command{
 	Use:   "proj",
 	Short: "create new project",
-	Long:  `A dir structure will be created for you with a generated with $PROJECTSHOME`,
+	Long:  `A dir structure will be created for you within the passed dir location`,
 	Run: func(cmd *cobra.Command, args []string) {
+
 		projectName, _ := cmd.Flags().GetString("projectName")
 		projectsHome, _ := cmd.Flags().GetString("projectsHome")
-		projectDir := os.ExpandEnv(projectsHome) + os.ExpandEnv(projectName)
-		util.CreateDirs(projectDir)
-		designDir := projectDir + "/design/"
+		projectName = os.ExpandEnv(projectName)
+		projectsHome = os.ExpandEnv(projectsHome)
+
+		// Get the path of the executable
+		vtbHome, _ := os.Executable()
+		// remove exe name
+		vtbHome = filepath.Dir(vtbHome)
+		// Resolve any symlinks to get the real path
+		vtbHome, _ = filepath.EvalSymlinks(vtbHome)
+		vtbHome = os.ExpandEnv(vtbHome)
+
+		work := projectsHome + projectName
+		designDir := work + "/design/"
+
+		util.CreateDirs(work)
 		util.CreateDirs(designDir)
 
 		// cp testbench template to project directory
-		sourceFile := os.ExpandEnv("$VTBHOME/src/projectTemplate/")
-		destFile := os.ExpandEnv(projectDir)
+		sourceFile := vtbHome + "/src/projectTemplate/"
+		destFile := work
 		util.Copy(sourceFile, destFile)
 
-		// create project .env file
-		envFile := os.ExpandEnv(projectDir) + "/.env"
-		// Open the file for writing, creating it if it doesn't exist, or truncating it if it does
-		file, _ := os.OpenFile(envFile, os.O_WRONLY|os.O_CREATE|os.O_TRUNC, 0770)
-		work := os.ExpandEnv(projectsHome) + os.ExpandEnv(projectName) + "/"
-		file.WriteString("PROJECTSHOME=" + os.ExpandEnv(projectsHome) + "\n")
-		file.WriteString("PROJECTNAME=" + os.ExpandEnv(projectName) + "\n")
-		file.WriteString("WORK=" + work + "\n")
-		file.WriteString("YAMLFILES=" +
-			"$WORK/verif/config/yaml/*.yaml,\\\n" +
-			"$WORK/verif/scenarios/yaml/*.yaml" + "\\\n")
-		defer file.Close()
+		// create project .proj file
+		projCfg := util.NewProjCfg()
+		projFile := work + "/.proj"
 
-		fmt.Printf("Project successfully generated in %s\n", projectDir)
+		// Add vars to envFile
+		projCfg.AddEnvVar("VTBHOME", vtbHome)
+		projCfg.AddEnvVar("PROJECTNAME", projectName)
+		projCfg.AddEnvVar("PROJECTSHOME", projectsHome)
+		projCfg.AddEnvVar("CONTAINERHOME", "/VTB_PROJECTS/")
+		projCfg.AddEnvVar("WORK", projectsHome+projectName)
+		projCfg.AddEnvVar("DESIGN", "$WORK/design/")
+		projCfg.AddEnvVar("VERIF", "$WORK/verif/")
+		projCfg.AddEnvVar("TBNAME", "TB")
+		projCfg.AddEnvVar("DESIGNFILES", "$WORK/design/dut.f")
+		projCfg.AddEnvVar("DUTTOP", "top")
+		projCfg.AddEnvVar("IMAGE_NAME", "vtb:v0")
+		// Add yaml simfile locations
+		projCfg.AddSimFileLocation("$VERIF/config/yaml/*.yaml")
+		projCfg.AddSimFileLocation("$VERIF/scenarios/yaml/*.yaml")
+		// Add Slang Options
+		projCfg.AddSlangOption("--allow-toplevel-iface-ports")
+		projCfg.AddSlangOption("-I$DESIGN/")
+		projCfg.AddSlangOption("-I$WORK/")
+		// Add Verilator Options
+		projCfg.AddVerilatorOption("--cc --binary -CFLAGS \"-std=c++17 -lpthread \"")
+		projCfg.AddVerilatorOption(" --debug --Wno-lint --sv --timing --trace --public --trace-structs")
+		projCfg.AddVerilatorOption("-f $VERIF/src.f")
+		projCfg.AddVerilatorOption("--Mdir $VERIF/run/vtb/")
+		projCfg.AddVerilatorOption("-I$VERIF/run/vtb/")
+		projCfg.AddVerilatorOption("-I$DESIGN/")
+		projCfg.AddVerilatorOption("-I$VERIF/src/")
+		projCfg.AddVerilatorOption("-I$VTBHOME/src/")
+		projCfg.AddVerilatorOption("-top-module $TBNAME")
+
+		projCfg.WriteYAMLFile(projFile)
+
+		fmt.Printf("Project successfully generated in %s\n", projCfg.Vars["WORK"])
 	},
 }
 
 func init() {
-	ProjCmd.Flags().StringP("projectsHome", "d", "$PROJECTSHOME", "Name of home to put projects in")
-	ProjCmd.Flags().StringP("projectName", "n", "$PROJECTNAME", "Name of project in $PROJECTSHOME")
+	ProjCmd.Flags().StringP("projectsHome", "d", "$HOME/VTB_PROJECTS/", "Name of dir to put project in")
+	ProjCmd.Flags().StringP("projectName", "n", "newPrj", "Name of project in projectsHome dir")
 }

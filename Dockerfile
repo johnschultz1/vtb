@@ -21,22 +21,6 @@ ENV VTBHOME="/usr/local/vtb/"
 RUN mkdir /VTB_PROJECTS/
 RUN chmod 777 /VTB_PROJECTS
 
-ENV PROJECTSHOME=/VTB_PROJECTS/
-ENV PROJECTNAME='newPrj'
-ENV WORK=$PROJECTSHOME/$PROJECTNAME/
-# location to Verilator home dir, uncomment and set
-ENV VERIHOME='/usr/local/verilator/'
-# location to Verilator exe
-ENV VERIEXE='${VERIHOME}/bin/verilator'
-# options to pass to verilator
-ENV VERIOPTS=' --debug --Wno-lint --sv --timing --trace --public --trace-structs '
-# includes to pass to verilator
-ENV VERIINC=' -I${VERIHOME}/include -I${VTBHOME}/src -I${PROJECTSHOME/$PROJECTNAME}/verif/run/vtb '
-# location to Slang exe
-ENV SLANGEXE='slang'
-# options to pass to slang
-ENV SLANGOPTS='--allow-toplevel-iface-ports'
-
 RUN apt-get update \
     && DEBIAN_FRONTEND=noninteractive \
        apt-get install --no-install-recommends -y \
@@ -68,16 +52,6 @@ RUN apt-get update \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
-# Install Go
-RUN wget https://dl.google.com/go/go1.23.5.linux-amd64.tar.gz -O go.tar.gz \
-    && tar -C /usr/local -xzf go.tar.gz \
-    && rm go.tar.gz
-
-# Set environment variables
-ENV GOROOT=/usr/local/go
-ENV GOPATH=$HOME/go
-ENV PATH=$GOPATH/bin:$GOROOT/bin:$PATH
-
 # Clone and build slang
 RUN git clone https://github.com/MikePopoloski/slang.git /usr/local/slang
 RUN cd /usr/local/slang/ && git checkout v7.0 && mkdir build && cd build \
@@ -92,21 +66,11 @@ RUN cd /usr/local/verilator && git checkout v5.030-45-g2cb1a8de7 \
     && ./configure \
     && make
 
-# Set up environment for the Go application
-WORKDIR /usr/local/vtb/
-COPY go.mod go.sum ./
-RUN  go mod download && go mod verify
-
 # Copy the rest of the Go application
 COPY . /usr/local/vtb/
 
-# Build the Go application
-RUN go build -o /usr/local/vtb/bin/vtb
-
 # update path
 ENV PATH="/usr/local/slang/build/bin:${PATH}"
-ENV PATH="/usr/local/go/bin:${PATH}"
-ENV PATH="/usr/local/vtb/bin:${PATH}"
 ENV PATH="/usr/local/verilator/bin:${PATH}"
 
 USER $USER

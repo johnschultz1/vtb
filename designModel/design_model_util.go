@@ -4,7 +4,6 @@ import (
 	"encoding/json"
 	"fmt"
 	"os"
-	"os/exec"
 	"regexp"
 	"strconv"
 	"strings"
@@ -12,14 +11,11 @@ import (
 	"vtb/util"
 )
 
-func GenerateSlangAST(designFiles string, designTop string, outputDir string, fileName string) {
-	slangEXE := os.ExpandEnv("$SLANGEXE")
-	slangOpts := os.ExpandEnv("$SLANGOPTS")
-	fmt.Print(designFiles)
-	cmd := exec.Command("bash", "-c", fmt.Sprintf("%s --top %s %s -ast-json %s/%s %s", slangEXE, designTop, slangOpts, outputDir, fileName, designFiles))
-	cmd.Dir = "./"
-	output, err := cmd.CombinedOutput()
-	util.ErrCheck(err, string(output))
+func GenerateSlangAST(cfg util.ProjCfg, designFiles string, designTop string, outputDir string, fileName string) {
+	slangEXE := "slang"
+	slangOpts := cfg.GetSlangOptions()
+	options := fmt.Sprintf(" --top %s %s -ast-json %s/%s -f %s", designTop, slangOpts, outputDir, fileName, designFiles)
+	util.ExecuteDockerCmd(cfg, slangEXE, options, cfg.GetVar("DESIGN")+"/slang.log")
 }
 
 func LoadDesignFromSlangAST(ast_filename string, design_top string, dir string) DesignModel {
@@ -88,26 +84,26 @@ func GenDutWrapper(design DesignModel, projectDir string, top string, fileType s
 		topComponent := GetDesignComponentByName(top, &design)
 
 		// create dut wrapper
-		outputFile, err := os.Create(os.ExpandEnv(projectDir) + "/design/dutWrapper.sv")
+		outputFile, err := os.Create(projectDir + "/design/dutWrapper.sv")
 		util.ErrCheck(err, "failed to create output file")
 		err = tmpl.Execute(outputFile, topComponent)
 		util.ErrCheck(err, "failed to create output file")
 		defer outputFile.Close()
 
 		// create the dut interface
-		interfaceFile, err := os.Create(os.ExpandEnv(projectDir) + "/design/dutInterface.sv")
+		interfaceFile, err := os.Create(projectDir + "/design/dutInterface.sv")
 		util.ErrCheck(err, "failed to create output file")
 		err = interfaceTmpl.Execute(interfaceFile, topComponent)
 		util.ErrCheck(err, "failed to create output file")
 		defer interfaceFile.Close()
 
 		// create design .f file
-		designSrcFile := os.ExpandEnv(projectDir) + "/design/src.f"
+		designSrcFile := projectDir + "/design/src.f"
 		// Open the file for writing, creating it if it doesn't exist, or truncating it if it does
 		file, _ := os.OpenFile(designSrcFile, os.O_WRONLY|os.O_CREATE|os.O_TRUNC, 0770)
-		file.WriteString(dutFiles + "\n")
-		file.WriteString("$PROJECTSHOME/$PROJECTNAME//design/dutInterface.sv" + "\n")
-		file.WriteString("$PROJECTSHOME/$PROJECTNAME//design/dutWrapper.sv" + "\n")
+		file.WriteString("-f " + dutFiles + "\n")
+		file.WriteString("$WORK/design/dutInterface.sv" + "\n")
+		file.WriteString("$WORK/design/dutWrapper.sv" + "\n")
 		defer file.Close()
 	}
 }

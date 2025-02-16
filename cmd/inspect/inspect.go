@@ -1,26 +1,23 @@
 /*
 Copyright © 2024 NAME HERE <EMAIL ADDRESS>
 */
-package analyze
+package inspect
 
 import (
-	"vtb/cmd/analyze/dut"
+	"vtb/cmd/inspect/dut"
 
 	"github.com/spf13/cobra"
 )
 
 // createCmd represents the create command
-var AnalyzeCmd = &cobra.Command{
-	Use:   "analyze",
-	Short: "Use to bring in external information",
+var InspectCmd = &cobra.Command{
+	Use:   "inspect",
+	Short: "Use to get information on an object",
 	Long:  ` vtb import dut [options]`,
 }
 
 func init() {
-	AnalyzeCmd.AddCommand(dut.ImportCmd)
-
-	dut.ImportCmd.Flags().StringP("designTop", "t", "", "name of the top level design module")
-	dut.ImportCmd.MarkFlagRequired("designTop")
+	InspectCmd.AddCommand(dut.ImportCmd)
 
 	// Here you will define your flags and configuration settings.
 
