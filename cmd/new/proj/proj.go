@@ -63,7 +63,7 @@ var ProjCmd = &cobra.Command{
 			cfg.AddEnvVar("TBNAME", "TB")
 			cfg.AddEnvVar("DESIGNFILES", "$WORK/design/dut.f")
 			cfg.AddEnvVar("DUTTOP", "top")
-			cfg.AddEnvVar("IMAGE_NAME", "vtb:v0")
+			cfg.AddEnvVar("IMAGE_NAME", "catbotminion2/vtb:v0")
 			// Add yaml simfile locations
 			cfg.AddSimFileLocation("$VERIF/config/yaml/*.yaml")
 			cfg.AddSimFileLocation("$VERIF/scenarios/yaml/*.yaml")
