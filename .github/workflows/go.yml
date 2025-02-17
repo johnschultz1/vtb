@@ -31,21 +31,10 @@ jobs:
       run: docker images
 
     - name: Create An Example Project
-      run: |
-        ./vtb new proj -n testProject
-        ls -l  ~/VTB_PROJECTS/testProject
-        ls -l  ~/VTB_PROJECTS/testProject/design/
-        ls -l  ~/VTB_PROJECTS/testProject/verif/
-        ls -l  ~/VTB_PROJECTS/testProject/verif/
-        ls -l  ~/VTB_PROJECTS/testProject/verif/run/
-        ls -l  ~/VTB_PROJECTS/testProject/verif/config/yaml/
-        ls -l  ~/VTB_PROJECTS/testProject/verif/scenarios/yaml/
+      run: ./vtb new proj -n testProject
 
     - name: Inspect the DUT to create the DUT interface and Wrapper
-      run: |
-        ls -l  ~/VTB_PROJECTS/testProject/design/
-        ./vtb inspect dut -p ~/VTB_PROJECTS/testProject/.proj -t dut
-        ls -l  ~/VTB_PROJECTS/testProject/design/
+      run: ./vtb inspect dut -p ~/VTB_PROJECTS/testProject/.proj -t dut
 
     - name: Run an example Scenario, build -b and run -r
       run:  ./vtb sim -s scenario1 -p ~/VTB_PROJECTS/testProject/.proj -b -r
