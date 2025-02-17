@@ -35,6 +35,7 @@ func ExecuteDockerCmd(cfg ProjCfg, cmd string, cmdOptions string, logFile string
 	args = append(args, "-e", fmt.Sprintf("DESIGN=%s%s%s", cfg.Vars["CONTAINERHOME"], cfg.Vars["PROJECTNAME"], "/design/"))
 	args = append(args, "-e", fmt.Sprintf("VERIF=%s%s%s", cfg.Vars["CONTAINERHOME"], cfg.Vars["PROJECTNAME"], "/verif/"))
 	args = append(args, "-e", fmt.Sprintf("TBNAME=%s", cfg.Vars["TBNAME"]))
+	args = append(args, "-e", fmt.Sprintf("USER=%s", "$(whoami)"))
 	args = append(args, cfg.Vars["IMAGE_NAME"], cmdStr)
 
 	// Create Logfile
