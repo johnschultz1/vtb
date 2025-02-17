@@ -49,6 +49,5 @@ func init() {
 	SimCmd.Flags().StringP("options", "o", "", "runtime options")
 	SimCmd.Flags().BoolP("build", "b", false, "build option")
 	SimCmd.Flags().BoolP("run", "r", false, "run option")
-	SimCmd.Flags().StringP("projectFile", "p", "./.proj", "Location of .proj file, defaults to ./")
 	SimCmd.MarkFlagRequired("scenario")
 }

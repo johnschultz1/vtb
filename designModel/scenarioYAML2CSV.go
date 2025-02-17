@@ -130,7 +130,7 @@ func LoadYamlFiles(filePatterns []string, projectDir string, outputDir string, t
 				if err := yaml.Unmarshal(raw, &config); err != nil {
 					return fmt.Errorf("failed to decode config in file %s: %w", filename, err)
 				}
-				print(outputDir)
+
 				// Create CSV for config
 				if err := writeConfigToCSV(config, outputDir+"config.csv"); err != nil {
 					return fmt.Errorf("failed to write config CSV for file %s: %w", filename, err)

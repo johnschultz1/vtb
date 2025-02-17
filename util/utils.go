@@ -20,7 +20,7 @@ func Power(base, exponent int) int {
 // error check
 func ErrCheck(err error, msg string) {
 	if err != nil {
-		fmt.Printf("error occured checking %s", msg)
+		fmt.Printf("Error Occured\n%s\n", msg)
 		panic(err)
 	}
 }
