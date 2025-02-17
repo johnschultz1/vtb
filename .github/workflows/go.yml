@@ -22,7 +22,7 @@ jobs:
         go-version: '1.23.2'
 
     - name: Build
-      run: go build -o vtb ./path/to/main.go
+      run: go build -o ./vtb ./
 
     - name: Pull Public Docker Image
       run: docker pull catbotminion2/vtb:v0
