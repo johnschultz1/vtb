@@ -1,26 +1,23 @@
 /*
 Copyright © 2024 NAME HERE <EMAIL ADDRESS>
 */
-package create
+package inspect
 
 import (
-	"vtb/cmd/create/tb"
+	"vtb/cmd/inspect/dut"
 
 	"github.com/spf13/cobra"
 )
 
 // createCmd represents the create command
-var CreateCmd = &cobra.Command{
-	Use:   "create",
-	Short: "Use to create a verilator testbench",
-	Long:  ` vtb create tb [options]`,
-	//Run: func(cmd *cobra.Command, args []string) {
-	//	fmt.Println("create called")
-	//},
+var InspectCmd = &cobra.Command{
+	Use:   "inspect",
+	Short: "Use to get information on an object",
+	Long:  ` vtb import dut [options]`,
 }
 
 func init() {
-	CreateCmd.AddCommand(tb.TbCmd)
+	InspectCmd.AddCommand(dut.ImportCmd)
 
 	// Here you will define your flags and configuration settings.
 

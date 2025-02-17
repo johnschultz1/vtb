@@ -1,2 +1,2 @@
--I$PROJECTDIR/./verif/jobs/
-$PROJECTDIR/./verif/jobs/jobsPkg.sv
+-I$PROJECTSHOME/$PROJECTNAME/./verif/jobs/
+$PROJECTSHOME/$PROJECTNAME/./verif/jobs/jobsPkg.sv

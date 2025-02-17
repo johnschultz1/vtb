@@ -1,9 +1,0 @@
-JobName,CallName,Config,DependencyName,DependencyType,Finishes
-scoreBoard,inOrderScoreBoard,SB,monitor,onMsgAvail,false
-scoreBoard,inOrderScoreBoard,SB,predictor,onMsgAvail,false
-monitor,monitor,monitor,,,false
-predictor,predictor,predictor,rst,onFinish,false
-dly1,delay,dly6,,,true
-rst,toggleSeq,rst,,,true
-clk,toggleSeq,clk,,,false
-dly2,delay,dly6,rst,onFinish,true
