@@ -1,6 +1,8 @@
 #!/bin/bash
 # make home dir
 export HOME=/home/$(whoami)/
+printf "HOME var set to: ${HOME}\n"
+printf "Executing $@\n\n"
 [ -d "/home/$(whoami)/" ] || mkdir -p "/home/$(whoami)/"
 # exec whatever cmd is passed
 if [ "$1" == "exec" ]; then
