@@ -37,7 +37,7 @@ jobs:
         ls -l  ~/VTB_PROJECTS/testProject/design/
         ls -l  ~/VTB_PROJECTS/testProject/verif/
         ls -l  ~/VTB_PROJECTS/testProject/verif/
-        ls -l  ~/VTB_PROJECTS/testProject/verif/run
+        ls -l  ~/VTB_PROJECTS/testProject/verif/run/
         ls -l  ~/VTB_PROJECTS/testProject/verif/config/yaml/
         ls -l  ~/VTB_PROJECTS/testProject/verif/scenarios/yaml/
 
