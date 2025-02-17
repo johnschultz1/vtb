@@ -22,7 +22,7 @@ jobs:
         go-version: '1.23.2'
 
     - name: Build
-      run: go build -v ./...
+      run: go build -o vtb ./path/to/main.go
 
     - name: Pull Public Docker Image
       run: docker pull catbotminion2/vtb:v0
@@ -31,12 +31,12 @@ jobs:
       run: docker images
 
     - name: Create An Example Project
-      run:  vtb new proj -n testProject
+      run:  ./vtb new proj -n testProject
 
     - name: Inspect the DUT to create the DUT interface and Wrapper
-      run:  vtb inspect dut -p ~/VTB_PROJECTS/testProject/.proj -t dut
+      run:  ./vtb inspect dut -p ~/VTB_PROJECTS/testProject/.proj -t dut
 
     - name: Run an example Scenario, build -b and run -r
-      run:  vtb sim -s scenario1 -p ~/VTB_PROJECTS/testProject/.proj -b -r
+      run:  ./vtb sim -s scenario1 -p ~/VTB_PROJECTS/testProject/.proj -b -r
 
       
