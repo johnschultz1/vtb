@@ -1,0 +1,42 @@
+# This workflow will build a golang project
+# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-go
+
+name: Go
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Set up Go
+      uses: actions/setup-go@v4
+      with:
+        go-version: '1.20'
+
+    - name: Build
+      run: go build -v ./...
+
+    - name: Pull Public Docker Image
+      run: docker pull catbotminion2/vtb:v0
+
+    - name: List Docker Images
+      run: docker images
+
+    - name: Create An Example Project
+      run:  ./vtb new proj -n testProject
+
+    - name: Inspect the DUT to create the DUT interface and Wrapper
+      run:  ./vtb inspect dut -p ~/VTB_PROJECTS/testProject/.proj -t dut
+
+    - name: Run an example Scenario, build -b and run -r
+      run:  ./vtb sim -s scenario1 -p ~/VTB_PROJECTS/testProject/.proj -b -r
+
+      
